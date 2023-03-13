@@ -1,0 +1,17 @@
+# server:
+#   address:     ":8000"
+#   openapiPath: "/api.json"
+#   swaggerPath: "/swagger"
+
+logger:
+  path: "./logs/"
+  file: "{Y-m-d}.log"
+  stdout: true
+  rotateSize: "100M"
+  rotateBackupLimit: 10
+  rotateBackupExpire: "10d"
+  rotateBackupCompress: 9
+  rotateCheckInterval: "24h"
+
+
+
