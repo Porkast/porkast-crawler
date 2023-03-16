@@ -2,8 +2,6 @@ package celery
 
 import (
 	"context"
-	"guoshao-fm-crawler/internal/consts"
-	"guoshao-fm-crawler/internal/service/celery/worker"
 
 	"github.com/gocelery/gocelery"
 	"github.com/gogf/gf/v2/container/gvar"
@@ -49,9 +47,4 @@ func InitCeleryClient(ctx context.Context) {
 		g.Log().Fatal(ctx, "Failed to create new celery client : ", err)
 	}
 
-}
-
-func RegisterWorker() {
-	goceleryClient.Register(consts.XIMALAYA_PODCAST_WORKER, worker.ParseXiMaLaYaPodcast)
-	goceleryClient.Register(consts.XIMALAYA_ENTRY_WORKER, worker.ParseXiMaLaYaEntry)
 }

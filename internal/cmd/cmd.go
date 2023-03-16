@@ -2,8 +2,10 @@ package cmd
 
 import (
 	"context"
+	"guoshao-fm-crawler/internal/consts"
 	"guoshao-fm-crawler/internal/service/celery"
 	"guoshao-fm-crawler/internal/service/celery/jobs"
+	"guoshao-fm-crawler/internal/service/celery/worker"
 
 	"github.com/gogf/gf/v2/os/gcmd"
 )
@@ -23,11 +25,15 @@ var (
 
 func initCelery(ctx context.Context) {
 	celery.InitCeleryClient(ctx)
-	celery.RegisterWorker()
 	celery.GetClient().StartWorker()
+	RegisterCeleryWorker()
 	jobs.StartXiMaLaYaJobs(ctx)
 }
 
+func RegisterCeleryWorker() {
+	celery.GetClient().Register(consts.XIMALAYA_PODCAST_WORKER, worker.ParseXiMaLaYaPodcast)
+	celery.GetClient().Register(consts.XIMALAYA_ENTRY_WORKER, worker.ParseXiMaLaYaEntry)
+}
 func hold() {
 	select {}
 }
