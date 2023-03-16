@@ -1,10 +1,15 @@
 package worker
 
 import (
+	"fmt"
+	"guoshao-fm-crawler/internal/service/celery/jobs"
 	"guoshao-fm-crawler/internal/service/network"
+	"guoshao-fm-crawler/utility"
 
+	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
+	"github.com/mmcdole/gofeed"
 )
 
 func ParseXiMaLaYaPodcast(url string) {
@@ -12,19 +17,69 @@ func ParseXiMaLaYaPodcast(url string) {
 		ctx        = gctx.New()
 		podcastUrl string
 		respStr    string
+		feed       *gofeed.Feed
 	)
-	g.Log().Info(ctx, "start run task with url : ", url)
 	podcastUrl = url + ".xml"
 	respStr = network.GetContent(ctx, podcastUrl)
-    if respStr != "" {
-        //The ximalaya album is RSS
+	if isXimalayaRespXml(respStr) {
+		//The ximalaya album is RSS
+		feed = utility.ParseFeed(ctx, respStr)
+		if feed == nil {
+			
+		}
+	}
+}
 
-    }
+func isXimalayaRespXml(respStr string) bool {
+	var (
+		err error
+	)
+	if respStr != "" {
+		_, err = gjson.LoadXml(respStr)
+		if err != nil {
+			return false
+		}
+		return true
+	}
+
+	return false
 }
 
 func ParseXiMaLaYaEntry(url string) {
 	var (
-		ctx = gctx.New()
+		ctx          = gctx.New()
+		respStr      string
+		respJson     *gjson.Json
+		albumUrlList []string
 	)
-	g.Log().Info(ctx, "start run task with url : ", url)
+
+	respStr = network.GetContent(ctx, url)
+	respJson = gjson.New(respStr)
+	if respJson == nil {
+		g.Log().Error(ctx, fmt.Sprintf("Parse ximalaya albums response json failed.\nUrl is %s\nResponse String is %s", url, respStr))
+	}
+
+	albumUrlList = getXimalayaAlbumUrlList(*respJson)
+	for _, albumUrl := range albumUrlList {
+		jobs.AssignXimalayaPodcastJob(ctx, albumUrl)
+	}
+}
+
+func getXimalayaAlbumUrlList(data gjson.Json) (albumUrlList []string) {
+	var (
+		ximalayaBaseUrl = "https://www.ximalaya.com"
+		albumJsons      []*gjson.Json
+	)
+
+	albumJsons = data.GetJsons("data.albums")
+	for _, albumJson := range albumJsons {
+		var (
+			albumUrl string
+		)
+
+		albumUrl = albumJson.Get("albumUrl").String()
+		albumUrlList = append(albumUrlList, ximalayaBaseUrl+albumUrl)
+	}
+
+	return
 }
