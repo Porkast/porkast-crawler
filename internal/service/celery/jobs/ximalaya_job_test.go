@@ -40,7 +40,7 @@ func Test_formatXimalayaUrl(t *testing.T) {
 		{
 			name: "format ximalaya url",
 			args: args{
-				url: "https://www.ximalaya.com/revision/category/v2/albums?pageNum=%d&pageSize=56&sort=1&categoryId=1005",
+				url:  "https://www.ximalaya.com/revision/category/v2/albums?pageNum=%d&pageSize=56&sort=1&categoryId=1005",
 				page: 1,
 			},
 			want: "https://www.ximalaya.com/revision/category/v2/albums?pageNum=1&pageSize=56&sort=1&categoryId=1005",
