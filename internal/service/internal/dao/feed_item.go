@@ -5,7 +5,12 @@
 package dao
 
 import (
+	"context"
+	"errors"
+	"guoshao-fm-crawler/internal/model/entity"
 	"guoshao-fm-crawler/internal/service/internal/dao/internal"
+
+	"github.com/gogf/gf/v2/database/gdb"
 )
 
 // feedItemDao is the data access object for table feed_item.
@@ -22,3 +27,22 @@ var (
 )
 
 // Fill with you ideas below.
+func InsertFeedItemIfNotExist(ctx context.Context, model entity.FeedItem) (err error) {
+
+	var (
+		result gdb.Record
+	)
+
+	result, err = FeedItem.Ctx(ctx).Where("channel_id=?", model.ChannelId).Where("title=?", model.Title).One()
+	if err != nil {
+		return
+	}
+
+	if !result.IsEmpty() {
+		return errors.New("The feed item is exist.")
+	}
+
+	_, err = FeedItem.Ctx(ctx).Insert(model)
+
+	return
+}

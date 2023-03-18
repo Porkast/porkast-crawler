@@ -5,7 +5,11 @@
 package dao
 
 import (
+	"context"
+	"guoshao-fm-crawler/internal/model/entity"
 	"guoshao-fm-crawler/internal/service/internal/dao/internal"
+
+	"github.com/gogf/gf/v2/database/gdb"
 )
 
 // feedChannelDao is the data access object for table feed_channel.
@@ -22,3 +26,14 @@ var (
 )
 
 // Fill with you ideas below.
+func InsertFeedChannel(ctx context.Context, model entity.FeedChannel) error {
+	var (
+		err    error
+		result gdb.Record
+	)
+	result, _ = FeedChannel.Ctx(ctx).Where("id=?", model.Id).One()
+	if result.IsEmpty() {
+		_, err = FeedChannel.Ctx(ctx).Insert(model)
+	}
+	return err
+}

@@ -2,10 +2,15 @@ package worker
 
 import (
 	"fmt"
+	"guoshao-fm-crawler/internal/model/entity"
 	"guoshao-fm-crawler/internal/service/celery/jobs"
+	"guoshao-fm-crawler/internal/service/internal/dao"
 	"guoshao-fm-crawler/internal/service/network"
 	"guoshao-fm-crawler/utility"
+	"strconv"
+	"time"
 
+	"github.com/gogf/gf/v2/encoding/ghash"
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
@@ -19,13 +24,32 @@ func ParseXiMaLaYaPodcast(url string) {
 		respStr    string
 		feed       *gofeed.Feed
 	)
+	time.Sleep(time.Second * 3)
 	podcastUrl = url + ".xml"
 	respStr = network.GetContent(ctx, podcastUrl)
 	if isXimalayaRespXml(respStr) {
 		//The ximalaya album is RSS
 		feed = utility.ParseFeed(ctx, respStr)
-		if feed == nil {
-			
+		if feed != nil {
+			g.Log().Info(ctx, "Get feed %s ")
+			var (
+				feedChannelMode entity.FeedChannel
+				feedItemList    []entity.FeedItem
+				feedID          string
+			)
+			feedID = strconv.FormatUint(ghash.RS64([]byte(feed.FeedLink+feed.Title)), 32)
+			feedChannelMode = feedChannelToModel(feedID, *feed)
+			for _, item := range feed.Items {
+				var (
+					feedItem entity.FeedItem
+				)
+				feedItem = feedItemToModel(feedID, *item)
+				feedItemList = append(feedItemList, feedItem)
+			}
+			dao.InsertFeedChannel(ctx, feedChannelMode)
+			for _, item := range feedItemList {
+				dao.InsertFeedItemIfNotExist(ctx, item)
+			}
 		}
 	}
 }
