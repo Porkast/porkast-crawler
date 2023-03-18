@@ -21,7 +21,7 @@ create table
     if not exists rss_feed_item (
         id varchar(64) not null primary key,
         channel_id varchar(64) not null,
-        title mediumtext null,
+        title varchar (256) null,
         link varchar(128) null,
         pub_date date null,
         author varchar(128) null,
