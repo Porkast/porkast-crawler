@@ -22,8 +22,8 @@ func feedChannelToModel(uid string, feed gofeed.Feed) (model entity.FeedChannel)
 		Copyright:   feed.Copyright,
 		Language:    feed.Language,
 		Author:      feed.Author.Name,
-		OwnerName:   feed.Author.Name,
-		OwnerEmail:  feed.Author.Email,
+		OwnerName:   feed.ITunesExt.Owner.Name,
+		OwnerEmail:  feed.ITunesExt.Owner.Email,
 		FeedType:    feed.FeedType,
 		Categories:  gstr.Join(feed.Categories, ","),
 	}
