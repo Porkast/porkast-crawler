@@ -34,20 +34,41 @@ func feedChannelToModel(uid string, feed gofeed.Feed) (model entity.FeedChannel)
 func feedItemToModel(channelId string, item gofeed.Item) (model entity.FeedItem) {
 
 	var itemID = strconv.FormatUint(ghash.RS64([]byte(item.Link+item.Title)), 32)
+
+	if item.ITunesExt == nil {
+		return
+	}
+
 	model = entity.FeedItem{
 		Id:          itemID,
 		ChannelId:   channelId,
 		Title:       item.Title,
 		Link:        item.Link,
 		PubDate:     gtime.NewFromTime(*item.PublishedParsed),
-		Author:      item.Author.Name,
 		InputDate:   gtime.Now(),
-		ImageUrl:    item.Image.URL,
 		Duration:    item.ITunesExt.Duration,
 		Episode:     item.ITunesExt.Episode,
 		EpisodeType: item.ITunesExt.EpisodeType,
 		Season:      item.ITunesExt.Season,
 		Description: item.Description,
+	}
+
+	if item.Image != nil {
+		model.ImageUrl = item.Image.URL
+	}
+
+	if item.Authors != nil || len(item.Authors) > 0 {
+		var (
+			authors []string
+		)
+		for _, author := range item.Authors {
+			authors = append(authors, author.Name)
+		}
+		if len(authors) == 0 {
+			model.Author = authors[0]
+		} else {
+			model.Author = gstr.Join(authors, ",")
+		}
 	}
 
 	if len(item.Enclosures) > 0 && item.Enclosures[0] != nil {
