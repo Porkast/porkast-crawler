@@ -10,6 +10,39 @@ import (
 	"github.com/mmcdole/gofeed"
 )
 
+func Test_isStringXml(t *testing.T) {
+	type args struct {
+		respStr string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "Response string is RSS case",
+			args: args{
+				respStr: gfile.GetContents("./testdata/ximalaya_rss_resp.xml"),
+			},
+			want: true,
+		},
+		{
+			name: "Response string is not RSS case",
+			args: args{
+				respStr: "",
+			},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := isStringXml(tt.args.respStr); got != tt.want {
+				t.Errorf("isXimalayaRespXml() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func Test_feedChannelToModel(t *testing.T) {
 	var (
 		err     error

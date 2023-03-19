@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/gogf/gf/v2/encoding/gjson"
-	"github.com/gogf/gf/v2/os/gfile"
 )
 
 func Test_getXimalayaAlbumUrlList(t *testing.T) {
@@ -24,37 +23,4 @@ func Test_getXimalayaAlbumUrlList(t *testing.T) {
 		t.Fatal("Parse ximalaya album list is empty")
 	}
 
-}
-
-func Test_isXimalayaRespXml(t *testing.T) {
-	type args struct {
-		respStr string
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			name: "Response string is RSS case",
-			args: args{
-				respStr: gfile.GetContents("./testdata/ximalaya_rss_resp.xml"),
-			},
-			want: true,
-		},
-		{
-			name: "Response string is not RSS case",
-			args: args{
-				respStr: "",
-			},
-			want: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := isXimalayaRespXml(tt.args.respStr); got != tt.want {
-				t.Errorf("isXimalayaRespXml() = %v, want %v", got, tt.want)
-			}
-		})
-	}
 }

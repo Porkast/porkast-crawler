@@ -27,7 +27,7 @@ func ParseXiMaLaYaPodcast(url string) {
 	time.Sleep(time.Second * 3)
 	podcastUrl = url + ".xml"
 	respStr = network.GetContent(ctx, podcastUrl)
-	if isXimalayaRespXml(respStr) {
+	if isStringXml(respStr) {
 		//The ximalaya album is RSS
 		feed = utility.ParseFeed(ctx, respStr)
 		if feed != nil {
@@ -54,20 +54,6 @@ func ParseXiMaLaYaPodcast(url string) {
 	}
 }
 
-func isXimalayaRespXml(respStr string) bool {
-	var (
-		err error
-	)
-	if respStr != "" {
-		_, err = gjson.LoadXml(respStr)
-		if err != nil {
-			return false
-		}
-		return true
-	}
-
-	return false
-}
 
 func ParseXiMaLaYaEntry(url string) {
 	var (

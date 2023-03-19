@@ -5,10 +5,26 @@ import (
 	"strconv"
 
 	"github.com/gogf/gf/v2/encoding/ghash"
+	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/mmcdole/gofeed"
 )
+
+func isStringXml(respStr string) bool {
+	var (
+		err error
+	)
+	if respStr != "" {
+		_, err = gjson.LoadXml(respStr)
+		if err != nil {
+			return false
+		}
+		return true
+	}
+
+	return false
+}
 
 func feedChannelToModel(uid string, feed gofeed.Feed) (model entity.FeedChannel) {
 
