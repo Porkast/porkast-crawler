@@ -22,7 +22,7 @@ func TestInsertFeedChannel(t *testing.T) {
 		testModel entity.FeedChannel
 	)
 
-	g.DB().SetDebug(true)
+	g.DB().SetDryRun(true)
 	testModel = entity.FeedChannel{
 		Title:       "test title",
 		ChannelDesc: "test channelDesc",
