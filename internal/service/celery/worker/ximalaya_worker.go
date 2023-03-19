@@ -46,7 +46,7 @@ func ParseXiMaLaYaPodcast(url string) {
 				feedItem = feedItemToModel(feedID, *item)
 				feedItemList = append(feedItemList, feedItem)
 			}
-			dao.InsertFeedChannel(ctx, feedChannelMode)
+			dao.InsertFeedChannelIfNotExist(ctx, feedChannelMode)
 			for _, item := range feedItemList {
 				dao.InsertFeedItemIfNotExist(ctx, item)
 			}

@@ -26,7 +26,7 @@ var (
 )
 
 // Fill with you ideas below.
-func InsertFeedChannel(ctx context.Context, model entity.FeedChannel) error {
+func InsertFeedChannelIfNotExist(ctx context.Context, model entity.FeedChannel) error {
 	var (
 		err    error
 		result gdb.Record
