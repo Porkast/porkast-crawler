@@ -23,3 +23,18 @@ const XIMALAYA_CATEGORY_URL_CHILDREN = "https://www.ximalaya.com/revision/catego
 
 // 商业财经
 const XIMALAYA_CATEGORY_URL_BUSINESS = "https://www.ximalaya.com/revision/category/v2/albums?pageNum=%d&pageSize=56&sort=1&categoryId=8"
+
+// 历史
+const XIMALAYA_CATEGORY_URL_HISTORY = "https://www.ximalaya.com/revision/category/v2/albums?pageNum=%d&pageSize=56&sort=1&categoryId=9"
+
+//相声
+const XIMALAYA_CATEGORY_URL_XIANGSHEN = "https://www.ximalaya.com/revision/category/v2/albums?pageNum=%d&pageSize=56&sort=1&categoryId=12"
+
+//个人成长
+const XIMALAYA_CATEGORY_URL_GEREN_CHENGZHANG = "https://www.ximalaya.com/revision/category/v2/albums?pageNum=%d&pageSize=56&sort=1&categoryId=13"
+
+// 人文国学
+const XIMALAYA_CATEGORY_URL_RENWEN_GUOXUE = "https://www.ximalaya.com/revision/category/v2/albums?pageNum=%d&pageSize=56&sort=1&categoryId=1002"
+
+// 生活
+const XIMALAYA_CATEGORY_URL_LIFE = "https://www.ximalaya.com/revision/category/v2/albums?pageNum=%d&pageSize=56&sort=1&categoryId=1006"
