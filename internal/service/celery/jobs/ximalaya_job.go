@@ -34,6 +34,7 @@ func StartXiMaLaYaJobs(ctx context.Context) {
 
 		for {
 			g.Log().Info(ctx, "start ximalaya jobs")
+			time.Sleep(getRandomStartTime())
 			AssignXiMaLaYaEntryJob(ctx)
 			time.Sleep(refreshTime)
 		}

@@ -19,6 +19,7 @@ func StartLizhiJob(ctx context.Context) {
 
 		for {
 			g.Log().Info(ctx, "start lizhi FM entry jobs")
+			time.Sleep(getRandomStartTime())
 			AssignLizhiEntryJob(ctx)
 			time.Sleep(refreshTime)
 		}
