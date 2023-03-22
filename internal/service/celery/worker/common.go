@@ -8,19 +8,21 @@ import (
 	"strconv"
 
 	"github.com/gogf/gf/v2/encoding/ghash"
-	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/mmcdole/gofeed"
 )
 
-func isStringXml(respStr string) bool {
+func isStringRSSXml(respStr string) bool {
 	var (
-		err error
+		err  error
+		fp   *gofeed.Parser
+		feed *gofeed.Feed
 	)
 	if respStr != "" {
-		_, err = gjson.LoadXml(respStr)
-		if err != nil {
+		fp = gofeed.NewParser()
+		feed, err = fp.ParseString(respStr)
+		if err != nil || feed == nil {
 			return false
 		}
 		return true
@@ -31,7 +33,7 @@ func isStringXml(respStr string) bool {
 
 func storeFeed(ctx context.Context, respStr string) {
 	var (
-		feed       *gofeed.Feed
+		feed *gofeed.Feed
 	)
 	feed = utility.ParseFeed(ctx, respStr)
 	if feed != nil {

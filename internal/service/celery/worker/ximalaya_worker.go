@@ -20,7 +20,7 @@ func ParseXiMaLaYaPodcast(url string) {
 	time.Sleep(time.Second * 3)
 	podcastUrl = url + ".xml"
 	respStr = network.GetContent(ctx, podcastUrl)
-	if isStringXml(respStr) {
+	if isStringRSSXml(respStr) {
 		//The ximalaya album is RSS
 		storeFeed(ctx, respStr)
 	}

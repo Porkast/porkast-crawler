@@ -10,7 +10,7 @@ import (
 	"github.com/mmcdole/gofeed"
 )
 
-func Test_isStringXml(t *testing.T) {
+func Test_isStringRSSXml(t *testing.T) {
 	type args struct {
 		respStr string
 	}
@@ -27,6 +27,13 @@ func Test_isStringXml(t *testing.T) {
 			want: true,
 		},
 		{
+			name: "Response html string is not RSS case",
+			args: args{
+				respStr: gfile.GetContents("./testdata/lizhi_404.html"),
+			},
+			want: false,
+		},
+		{
 			name: "Response string is not RSS case",
 			args: args{
 				respStr: "",
@@ -36,7 +43,7 @@ func Test_isStringXml(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := isStringXml(tt.args.respStr); got != tt.want {
+			if got := isStringRSSXml(tt.args.respStr); got != tt.want {
 				t.Errorf("isXimalayaRespXml() = %v, want %v", got, tt.want)
 			}
 		})

@@ -71,7 +71,7 @@ func ParseLizhiPodcastRSS(url string) {
 	)
 
 	respStr = network.GetContent(ctx, podcastUrl)
-	if isStringXml(respStr) {
+	if isStringRSSXml(respStr) {
 		//The lizhi fm radio is RSS
 		storeFeed(ctx, respStr)
 	}
