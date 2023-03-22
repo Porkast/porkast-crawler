@@ -1,7 +1,10 @@
 package worker
 
 import (
+	"context"
 	"guoshao-fm-crawler/internal/model/entity"
+	"guoshao-fm-crawler/internal/service/internal/dao"
+	"guoshao-fm-crawler/utility"
 	"strconv"
 
 	"github.com/gogf/gf/v2/encoding/ghash"
@@ -24,6 +27,33 @@ func isStringXml(respStr string) bool {
 	}
 
 	return false
+}
+
+func storeFeed(ctx context.Context, respStr string) {
+	var (
+		feed       *gofeed.Feed
+	)
+	feed = utility.ParseFeed(ctx, respStr)
+	if feed != nil {
+		var (
+			feedChannelMode entity.FeedChannel
+			feedItemList    []entity.FeedItem
+			feedID          string
+		)
+		feedID = strconv.FormatUint(ghash.RS64([]byte(feed.Description+feed.Title)), 32)
+		feedChannelMode = feedChannelToModel(feedID, *feed)
+		for _, item := range feed.Items {
+			var (
+				feedItem entity.FeedItem
+			)
+			feedItem = feedItemToModel(feedID, *item)
+			feedItemList = append(feedItemList, feedItem)
+		}
+		dao.InsertFeedChannelIfNotExist(ctx, feedChannelMode)
+		for _, item := range feedItemList {
+			dao.InsertFeedItemIfNotExist(ctx, item)
+		}
+	}
 }
 
 func feedChannelToModel(uid string, feed gofeed.Feed) (model entity.FeedChannel) {
