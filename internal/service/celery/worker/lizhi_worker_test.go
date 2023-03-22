@@ -66,7 +66,7 @@ func Test_getLizhiCurrentCategoryPageRadioCount(t *testing.T) {
 	endPageHtmlStr = gfile.GetContents("./testdata/lizhi_category_end_page.html")
 	count = getLizhiCurrentCategoryPageRadioCount(endPageHtmlStr)
 	if count != 2 {
-		t.Fatal("Get lizhi category total radio count failed, should be 24, but it is ", count)
+		t.Fatal("Get lizhi category total radio count failed, should be 2, but it is ", count)
 	}
 }
 
