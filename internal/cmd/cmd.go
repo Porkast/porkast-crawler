@@ -28,6 +28,7 @@ func initCelery(ctx context.Context) {
 	celery.GetClient().StartWorker()
 	RegisterCeleryWorker()
 	jobs.StartXiMaLaYaJobs(ctx) 
+	jobs.StartLizhiJob(ctx) 
 }
 
 func RegisterCeleryWorker() {
