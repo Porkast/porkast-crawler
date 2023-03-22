@@ -31,8 +31,10 @@ func initCelery(ctx context.Context) {
 }
 
 func RegisterCeleryWorker() {
+	// XIMALAYA
 	celery.GetClient().Register(consts.XIMALAYA_PODCAST_WORKER, worker.ParseXiMaLaYaPodcast)
 	celery.GetClient().Register(consts.XIMALAYA_ENTRY_WORKER, worker.ParseXiMaLaYaEntry)
+	// LIZHI FM
 	celery.GetClient().Register(consts.LIZHI_ENTRY_WORKER, worker.ParseLizhiAllCategories)
 	celery.GetClient().Register(consts.LIZHI_CATEGORY_PARSE_WORKER, worker.ParseLizhiPodcastByCategoryPage)
 	celery.GetClient().Register(consts.LIZHI_FM_RSS_URL, worker.ParseLizhiPodcastRSS)
