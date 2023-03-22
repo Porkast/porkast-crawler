@@ -35,7 +35,10 @@ func StartXiMaLaYaJobs(ctx context.Context) {
 		for {
 			g.Log().Info(ctx, "start ximalaya jobs")
 			time.Sleep(getRandomStartTime())
-			AssignXiMaLaYaEntryJob(ctx)
+			if !isJobStarted(ctx, consts.XIMALAYA_ENTRY_WORKER) {
+				jobIsStarted(ctx, consts.XIMALAYA_ENTRY_WORKER)
+				AssignXiMaLaYaEntryJob(ctx)
+			}
 			time.Sleep(refreshTime)
 		}
 	}(ctx)
