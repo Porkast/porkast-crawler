@@ -44,5 +44,5 @@ func isJobStarted(ctx context.Context, key string) (isStart bool) {
 }
 
 func jobIsStarted(ctx context.Context, key string)  {
-	cache.SetCache(ctx, key, key, int(time.Minute * 60))
+	cache.SetCache(ctx, key, key, int(time.Second * 60 * 60))
 }
