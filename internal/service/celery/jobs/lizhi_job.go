@@ -14,16 +14,20 @@ func StartLizhiJob(ctx context.Context) {
 	go func(ctx context.Context) {
 
 		var (
-			refreshTime = time.Hour * 1
+			refreshTime     = time.Hour * 1
+			randomSleepTime time.Duration
 		)
 
 		for {
-			g.Log().Info(ctx, "start lizhi FM entry jobs")
-			time.Sleep(getRandomStartTime())
+			randomSleepTime = getRandomStartTime()
+			g.Log().Info(ctx, "start lizhi FM entry jobs, sleep random time : ", randomSleepTime)
+			time.Sleep(randomSleepTime)
 			if !isJobStarted(ctx, consts.LIZHI_ENTRY_WORKER) {
 				jobIsStarted(ctx, consts.LIZHI_ENTRY_WORKER)
 				AssignLizhiEntryJob(ctx)
-			}
+			} else {
+                g.Log().Info(ctx, "The lizhi FM entry jobs is started, sleep ", refreshTime, " hour")
+            }
 			time.Sleep(refreshTime)
 		}
 	}(ctx)
@@ -40,7 +44,7 @@ func AssignLizhiEntryJob(ctx context.Context) {
 	}
 }
 
-func AssignLizhiCateGoryParseJob(ctx context.Context, url string) {
+func AssignLizhiCategoryParseJob(ctx context.Context, url string) {
 
 	var (
 		err error

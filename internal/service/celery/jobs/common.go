@@ -33,8 +33,8 @@ func isJobStarted(ctx context.Context, key string) (isStart bool) {
 
 	valueVal, err = cache.GetCache(ctx, key)
 	if err != nil {
-		isStart = false
-	} else if valueVal != nil {
+		isStart = true
+	} else if !valueVal.IsEmpty() {
 		isStart = true
 	} else {
 		isStart = false

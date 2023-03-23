@@ -29,16 +29,15 @@ func getXimalayaEntryUrlList() (urlList []string) {
 func StartXiMaLaYaJobs(ctx context.Context) {
 	go func(ctx context.Context) {
 		var (
-			refreshTime = time.Hour * 1
+			refreshTime     = time.Hour * 1
+			randomSleepTime time.Duration
 		)
 
 		for {
-			g.Log().Info(ctx, "start ximalaya jobs")
-			time.Sleep(getRandomStartTime())
-			if !isJobStarted(ctx, consts.XIMALAYA_ENTRY_WORKER) {
-				jobIsStarted(ctx, consts.XIMALAYA_ENTRY_WORKER)
-				AssignXiMaLaYaEntryJob(ctx)
-			}
+            randomSleepTime = getRandomStartTime()
+            g.Log().Info(ctx, "start ximalaya jobs, sleep random time : ", randomSleepTime)
+			time.Sleep(randomSleepTime)
+			AssignXiMaLaYaEntryJob(ctx)
 			time.Sleep(refreshTime)
 		}
 	}(ctx)
@@ -46,21 +45,28 @@ func StartXiMaLaYaJobs(ctx context.Context) {
 
 func AssignXiMaLaYaEntryJob(ctx context.Context) {
 	var (
-		startPage = 1
 		totalPage = 50
 		err       error
 	)
 
 	for _, url := range getXimalayaEntryUrlList() {
-		for i := 0; i < totalPage; i++ {
+		for i := 0; i < totalPage-1; i++ {
 			var (
-				targetUrl string
+				targetUrl   string
+				currentPage int
 			)
-			targetUrl = formatXimalayaUrl(url, startPage)
-			_, err = celery.GetClient().Delay(consts.XIMALAYA_ENTRY_WORKER, targetUrl)
-			if err != nil {
-				g.Log().Error(ctx, fmt.Sprintf("Assign XIMALAYA_ENTRY_WORKER with url %s failed : %s", url, err))
-			}
+			currentPage = i + 1
+			targetUrl = formatXimalayaUrl(url, currentPage)
+			if !isJobStarted(ctx, targetUrl) {
+				jobIsStarted(ctx, targetUrl)
+				g.Log().Debug(ctx, "Assign ximalaya entry work with url : ", targetUrl)
+				_, err = celery.GetClient().Delay(consts.XIMALAYA_ENTRY_WORKER, targetUrl)
+				if err != nil {
+					g.Log().Error(ctx, fmt.Sprintf("Assign XIMALAYA_ENTRY_WORKER with url %s failed : %s", url, err))
+				}
+			} else {
+                g.Log().Info(ctx, "The ximalaya FM entry jobs is started")
+            }
 		}
 	}
 

@@ -20,13 +20,14 @@ func ParseLizhiAllCategories(url string) {
 		categoryUrlList []string
 	)
 
-	homePageRespStr = network.GetContent(ctx, consts.LIZHI_FM_ENTRY_URL)
+    g.Log().Debug(ctx, "Start parse lizhi all category")
+	homePageRespStr = network.GetContent(ctx, url)
 	if homePageRespStr == "" {
 		g.Log().Error(ctx, "Get Lizhi FM home page failed")
 	}
 	categoryUrlList = getLizhiCategory(homePageRespStr)
 	for _, url := range categoryUrlList {
-		jobs.AssignLizhiCateGoryParseJob(ctx, url)
+		jobs.AssignLizhiCategoryParseJob(ctx, url)
 	}
 }
 
@@ -41,7 +42,8 @@ func ParseLizhiPodcastByCategoryPage(url string) {
 		nextCategoryUrl     string
 	)
 
-	categoryPageRespStr = network.GetContent(ctx, consts.LIZHI_FM_ENTRY_URL)
+    g.Log().Debug(ctx, "Start parse lizhi category page")
+	categoryPageRespStr = network.GetContent(ctx, url)
 	if categoryPageRespStr == "" {
 		g.Log().Error(ctx, "Get Lizhi FM category page failed")
 	}
@@ -53,24 +55,23 @@ func ParseLizhiPodcastByCategoryPage(url string) {
 		rssUrl = genLizhiRSSUrl(podcastId)
 		jobs.AssignLizhiPodcastXmlJob(ctx, rssUrl)
 	}
-	totalRadioCount = getLizhiCurrentCategoryPageRadioCount(url)
+	totalRadioCount = getLizhiCurrentCategoryPageRadioCount(categoryPageRespStr)
 	if totalRadioCount < 24 {
 		return
 	}
 	pageNum = getLizhiCategoryCurrentPageNum(url)
 	nextCategoryUrl = genNextLizhiCategoryPageUrl(url, pageNum)
-
-	g.Log().Info(ctx, podcastIdList, pageNum, nextCategoryUrl)
+	jobs.AssignLizhiCategoryParseJob(ctx, nextCategoryUrl)
 }
 
 func ParseLizhiPodcastRSS(url string) {
 	var (
 		ctx        = gctx.New()
-		podcastUrl string
 		respStr    string
 	)
 
-	respStr = network.GetContent(ctx, podcastUrl)
+    g.Log().Debug(ctx, "Start parse lizhi RSS with url : ", url)
+	respStr = network.TryGetRSSContent(ctx, url)
 	if isStringRSSXml(respStr) {
 		//The lizhi fm radio is RSS
 		storeFeed(ctx, respStr)

@@ -32,6 +32,28 @@ func GetContent(ctx context.Context, link string) (resp string) {
 	return
 }
 
+func TryGetRSSContent(ctx context.Context, link string) (resp string) {
+	var (
+		client *gclient.Client
+	)
+	if link == "" {
+		g.Log().Error(ctx, "The request link is empty")
+		return
+	}
+	client = GetHttpClient()
+	r, err := client.SetHeaderMap(getHeaders()).Get(ctx, link)
+	defer r.Close()
+	if r.StatusCode == 404 {
+		return
+	} else if err != nil {
+		g.Log().Line().Error(ctx, err)
+		return
+	}
+
+	resp = r.ReadAllString()
+	return
+}
+
 func GetContentByMobile(ctx context.Context, link string) (resp string) {
 	var (
 		client *gclient.Client
