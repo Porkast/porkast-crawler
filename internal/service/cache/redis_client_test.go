@@ -10,8 +10,8 @@ import (
 func Test_initRedisClient(t *testing.T) {
 	gtest.C(t, func(t *gtest.T) {
 		var (
-			ctx  = gctx.New()
-			err  error
+			ctx = gctx.New()
+			err error
 		)
 		redisClient := initRedisClient(ctx)
 		if redisClient == nil {

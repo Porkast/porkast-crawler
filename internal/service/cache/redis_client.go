@@ -9,7 +9,6 @@ import (
 	"github.com/gogf/gf/v2/os/gcfg"
 )
 
-
 func initRedisConfig(ctx context.Context) *gredis.Config {
 	var (
 		err         error

@@ -38,7 +38,7 @@ func Test_getRandomStartTime(t *testing.T) {
 	)
 
 	gotTime = getRandomStartTime()
-	if gotTime > time.Second * 20 || gotTime < time.Second * 5 {
+	if gotTime > time.Second*20 || gotTime < time.Second*5 {
 		t.Fatal("Get random time not int 5 and 20 second")
 	}
 
