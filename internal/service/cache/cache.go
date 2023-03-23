@@ -17,6 +17,7 @@ func InitCache(ctx context.Context) {
 		redisClient *gredis.Redis
 		err         error
 	)
+    defaultCache = gcache.New()
 	redisClient = initRedisClient(ctx)
 	if redisClient != nil {
 		_, err = redisClient.Do(ctx, "SET", "Test", "test_value")
