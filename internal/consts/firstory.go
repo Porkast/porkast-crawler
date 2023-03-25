@@ -10,7 +10,7 @@ const FIRSTORY_CATEGORY_BASE_URL = "https://open.firstory.me/browse/category/"
 
 const FIRSTORY_GRAPHQL_BASE_URL = "https://prod-api.firstory.me/hosting/v1/graphql"
 
-const FIRSOTRY_RSS_BASE_URL = "https://open.firstory.me/user/"
+const FIRSOTRY_RSS_BASE_URL = "https://open.firstory.me/rss/user/"
 
 const FIRSTORY_GRAPHQL_SHOW_QUERY_JSON = `{"operationName": "SearchShow","variables": {"categoryId": "%s","first": 20,"skip": %d},"query": "query SearchShow($showIds: [ID!], $categoryId: ID, $queryString: String, $first: Int, $skip: Int) {playerShowFind(showIds: $showIds, categoryId: $categoryId, queryString: $queryString, take: $first, skip: $skip) {id name avatar urlSlug __typename }}"}`
 

@@ -19,6 +19,11 @@ func ParseFistoryAllCategoryList() {
 		categoryIdList  []string
 	)
 
+	g.Log().Line().Debug(ctx, "Start parse firstory all category")
+	categoryStrResp = getFirstoryAllCategoryList(ctx)
+	if categoryStrResp == "" {
+		g.Log().Line().Error(ctx, "Get firstory all category list failed")
+	}
 	categoryIdList = parseFirstoryAllCategoryList(categoryStrResp)
 	for _, categoryId := range categoryIdList {
 		jobs.AssignFirstoryCategoryJob(ctx, categoryId, 0)
@@ -32,12 +37,17 @@ func ParseFirstoryCategoryItemList(categoryId string, skip int) {
 		showIdList []string
 	)
 
+	g.Log().Line().Debug(ctx, "Start parse firstory all category show id list")
 	respStr = getFirstoryCategoryShowsJsonStr(ctx, categoryId, skip)
 	showIdList = parseFirstoryShowList(respStr)
+	if len(showIdList) == 0 {
+		g.Log().Line().Debug(ctx, "The category show list is empty, categoryId: %s, skip number : %s")
+		return
+	}
 	for _, showId := range showIdList {
 		jobs.AssignFirstoryShowRSSJob(ctx, showId)
 	}
-
+	jobs.AssignFirstoryCategoryJob(ctx, categoryId, skip+20)
 }
 
 func ParseFirstoryShowRSS(categoryId string) {
@@ -47,7 +57,12 @@ func ParseFirstoryShowRSS(categoryId string) {
 		rssLink string
 	)
 
+	g.Log().Line().Debug(ctx, "Start parse firstory show RSS")
 	respStr = getFirstoryCategoryShowInfoJsonStr(ctx, categoryId)
+	if respStr == "" {
+		g.Log().Line().Error(ctx, fmt.Sprintf("Get firstory show info content empty with categoryId %s", categoryId))
+		return
+	}
 	rssLink = getFirsotryShowRSSLink(ctx, respStr)
 	respStr = network.TryGetRSSContent(ctx, rssLink)
 	if isStringRSSXml(respStr) {
@@ -92,6 +107,9 @@ func parseFirstoryShowList(jsonStr string) (showIdList []string) {
 		showJsonList []*gjson.Json
 	)
 	showRespJson = gjson.New(jsonStr)
+	if showRespJson == nil || showRespJson.IsNil() {
+		return
+	}
 	showJsonList = showRespJson.GetJsons("data.playerShowFind")
 	for _, showJson := range showJsonList {
 		var (

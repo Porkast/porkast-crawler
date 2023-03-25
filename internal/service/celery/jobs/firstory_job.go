@@ -23,7 +23,7 @@ func StartFirstoryJob(ctx context.Context) {
 			time.Sleep(randomSleepTime)
 			if !isJobStarted(ctx, consts.FIRSTORY_ENTRY_JOB) {
 				jobIsStarted(ctx, consts.FIRSTORY_ENTRY_JOB)
-				AssignLizhiEntryJob(ctx)
+				AssignFirstoryEntryJob(ctx)
 			} else {
 				g.Log().Line().Info(ctx, "The FIRSTORY FM entry jobs is started, sleep ", refreshTime, " hour")
 			}
@@ -36,7 +36,7 @@ func AssignFirstoryEntryJob(ctx context.Context) {
 
 	var err error
 
-	_, err = celery.GetClient().Delay(consts.FIRSTORY_CATEGORY_LIST_JOB)
+	_, err = celery.GetClient().Delay(consts.FIRSTORY_ENTRY_JOB)
 	if err != nil {
 		g.Log().Line().Error(ctx, fmt.Sprintf("Assign FIRSTORY_CATEGORY_JOB with failed"))
 	}
