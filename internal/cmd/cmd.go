@@ -7,8 +7,11 @@ import (
 	"guoshao-fm-crawler/internal/service/celery"
 	"guoshao-fm-crawler/internal/service/celery/jobs"
 	"guoshao-fm-crawler/internal/service/celery/worker"
+	"os"
 
+	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcmd"
+	"github.com/gogf/gf/v2/os/glog"
 )
 
 var (
@@ -24,6 +27,12 @@ var (
 		},
 	}
 )
+
+func initConfig()  {
+	if os.Getenv("env") == "dev" {
+		g.Log().SetLevel(glog.LEVEL_ALL)
+	}
+}
 
 func initCache(ctx context.Context) {
 	cache.InitCache(ctx)
