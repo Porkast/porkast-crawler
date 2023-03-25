@@ -43,8 +43,15 @@ func TryGetRSSContent(ctx context.Context, link string) (resp string) {
 	}
 	client = GetHttpClient()
 	r, err := client.SetHeaderMap(getHeaders()).Get(ctx, link)
-	defer r.Close()
-	if r.StatusCode == 404 {
+	defer func(resp *gclient.Response) {
+		if rec := recover(); rec != nil {
+			g.Log().Line().Error(ctx, fmt.Sprintf("Get RSS content by link %s failed: \n%s\n", link, rec))
+		}
+		if resp != nil {
+			resp.Close()
+		}
+	}(r)
+	if r == nil || r.StatusCode == 404 {
 		return
 	} else if err != nil {
 		g.Log().Line().Error(ctx, err)

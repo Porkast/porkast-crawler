@@ -85,3 +85,33 @@ func TestGetContentByMobile(t *testing.T) {
 		})
 	}
 }
+
+func TestTryGetRSSContent(t *testing.T) {
+	type args struct {
+		ctx  context.Context
+		link string
+	}
+	tests := []struct {
+		name     string
+		args     args
+	}{
+		{
+			name: "Get rss content",
+			args: args{
+				ctx: gctx.New(),
+				link: "https://open.firstory.me/rss/user/cjfl8pzko3fwb0192dfgrn1so",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var (
+				rssResp string
+			)
+			rssResp = TryGetRSSContent(tt.args.ctx, tt.args.link)
+			if rssResp == "" {
+				t.Fatal("Get RSS content failed")
+			}
+		})
+	}
+}
