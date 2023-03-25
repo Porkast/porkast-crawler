@@ -2,6 +2,7 @@ package network
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -66,10 +67,18 @@ func GetContentByMobile(ctx context.Context, link string) (resp string) {
 
 func PostContentByMobile(ctx context.Context, link string, data ...interface{}) (resp string) {
 	var (
-		client *gclient.Client
+		err      error
+		client   *gclient.Client
+		response *gclient.Response
 	)
 	client = GetHttpClient()
-	resp = client.SetHeaderMap(getMobileHeader()).PostContent(ctx, link, data)
+	response, err = client.SetHeaderMap(getMobileHeader()).Post(ctx, link, data)
+	defer response.Close()
+	if err != nil {
+		g.Log().Line().Error(ctx, fmt.Sprintf("Do mobile post by url %s failed: \n%s\n", link, err))
+	}
+
+	resp = response.ReadAllString()
 
 	return
 }

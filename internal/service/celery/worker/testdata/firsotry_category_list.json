@@ -1,0 +1,139 @@
+{
+    "data": {
+        "playerCategoryFind": [
+            {
+                "id": "ck0zfa8rdcd370786j56unogu",
+                "nameEn": "Arts",
+                "nameZh": "藝術",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa8tocd3s0786l32az8jb",
+                "nameEn": "Business",
+                "nameZh": "商業",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa8vhcd4a0786jobv9bsu",
+                "nameEn": "Comedy",
+                "nameZh": "喜劇",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa8wwcd4n07861vzb6vm9",
+                "nameEn": "Education",
+                "nameZh": "教育",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa8yicd510786gsdgfi5p",
+                "nameEn": "Fiction",
+                "nameZh": "虛構",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa8zycd5b07868dohnz8d",
+                "nameEn": "Government",
+                "nameZh": "政府",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa91acd5f0786i746grcf",
+                "nameEn": "History",
+                "nameZh": "歷史",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa92dcd5j0786akodq38x",
+                "nameEn": "Health & Fitness",
+                "nameZh": "健康與健身",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa947cd640786vl4pltb1",
+                "nameEn": "Kids & Family",
+                "nameZh": "兒童與家庭",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa95rcd6j078680ejc8wt",
+                "nameEn": "Leisure",
+                "nameZh": "休閒",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa97hcd770786sgdkbf38",
+                "nameEn": "Music",
+                "nameZh": "音樂",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa98scd7k0786nl6j9fll",
+                "nameEn": "News",
+                "nameZh": "新聞",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa9aicd860786obbc5yco",
+                "nameEn": "Religion & Spirituality",
+                "nameZh": "宗教與靈修",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa9c7cd8o0786ub6pbis2",
+                "nameEn": "Science",
+                "nameZh": "科學",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa9dycd9a0786bzmz5xhq",
+                "nameEn": "Society & Culture",
+                "nameZh": "社會與文化",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa9flcd9t07862ugi5ima",
+                "nameEn": "Sports",
+                "nameZh": "體育",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa9htcdb10786bd3p21ll",
+                "nameEn": "Technology",
+                "nameZh": "科技",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa9iucdb50786906ayzr2",
+                "nameEn": "True Crime",
+                "nameZh": "犯罪紀實",
+                "parentCategory": null,
+                "__typename": "Category"
+            },
+            {
+                "id": "ck0zfa9jycdb907865m1ez8pn",
+                "nameEn": "TV & Film",
+                "nameZh": "影視",
+                "parentCategory": null,
+                "__typename": "Category"
+            }
+        ]
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "data": {
+        "playerShowFindOneByUrlSlug": {
+            "id": "cjfl8pzko3fwb0192dfgrn1so",
+            "name": "和許",
+            "avatar": "https://d3mww1g1pfq2pt.cloudfront.net/Avatar/cjfl8pzko3fwb0192dfgrn1so/1574078865187.jpg",
+            "intro": "-不專業療癒師/占卜師/作家/哲學家\n\n19.11.18\n下定決心分享內心極度深沉的聲音\n我是和許，給和煦聲音的何許人也。\n\n. 極度佛系錄音 (:\n. 聽見自己聲音很彆扭的女紙\n. 愛好 神秘學/文字/藝術/音樂/知識\n. 渴望治癒與被治癒\n. 一起來場靈魂深度的共鳴\n\ninstagram: hexu191118",
+            "isCreator": false,
+            "author": "",
+            "urlSlug": null,
+            "language": "zh",
+            "explicit": false,
+            "categories": [
+                {
+                    "id": "ck0zfa8rdcd370786j56unogu",
+                    "nameEn": "Arts",
+                    "nameZh": "藝術",
+                    "__typename": "Category"
+                }
+            ],
+            "import": null,
+            "distributions": [],
+            "externalLinks": [],
+            "websiteSetting": null,
+            "__typename": "Show",
+            "episodeCount": 12
+        }
+    }
+}

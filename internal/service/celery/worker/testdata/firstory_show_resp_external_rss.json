@@ -1,0 +1,147 @@
+{
+    "data": {
+        "playerShowFindOneByUrlSlug": {
+            "id": "ckbugenfo7qi10918jxt9doix",
+            "name": "iPodcast 人人是播主",
+            "avatar": "https://fdfs.xmcdn.com/storages/ef3b-audiofreehighqps/A0/02/CMCoOSQFU6vSAAVwlQDyIHTG.jpeg",
+            "intro": "2014发行第一集节目，发生了许多翻天覆地的改变，我不知道我这么爱播，已经播了两千多日子，行走40个国家，在西班牙成为了播客教练！这个专辑是希望鼓励更多的朋友开自己的播客，打造自己的个人品牌，说自己的故事，用声音打开自己和世界的无限机遇！FB粉專@flywithlily @ipodcasttw",
+            "isCreator": false,
+            "author": "Fly with Lily",
+            "urlSlug": "ipodcast",
+            "language": "zh",
+            "explicit": false,
+            "categories": [
+                {
+                    "id": "ck0zfa8rdcd370786j56unogu",
+                    "nameEn": "Arts",
+                    "nameZh": "藝術",
+                    "__typename": "Category"
+                }
+            ],
+            "import": {
+                "status": 4,
+                "originRssUrl": "http://www.ximalaya.com/album/39378235.xml",
+                "__typename": "ShowImport"
+            },
+            "distributions": [
+                {
+                    "status": 3,
+                    "platformType": 13,
+                    "platformId": "7eZjoFQIYzCeNMWnhwj8UW",
+                    "platformUrl": "https://open.spotify.com/show/spotifyId",
+                    "__typename": "Distribution"
+                },
+                {
+                    "status": 3,
+                    "platformType": 1,
+                    "platformId": "1521111665",
+                    "platformUrl": "https://podcasts.apple.com/podcast/id1521111665",
+                    "__typename": "Distribution"
+                },
+                {
+                    "status": 3,
+                    "platformType": 5,
+                    "platformId": null,
+                    "platformUrl": "https://podcasts.google.com/feed/aHR0cHM6Ly9vcGVuLmZpcnN0b3J5Lm1lL3Jzcy91c2VyL2NrYnVnZW5mbzdxaTEwOTE4anh0OWRvaXg=",
+                    "__typename": "Distribution"
+                },
+                {
+                    "status": 3,
+                    "platformType": 9,
+                    "platformId": null,
+                    "platformUrl": "https://pca.st/f5k6zsi8",
+                    "__typename": "Distribution"
+                },
+                {
+                    "status": 3,
+                    "platformType": 6,
+                    "platformId": "X-BN0tPQRrwmWVk2md",
+                    "platformUrl": "https://podcast.kkbox.com/channel/X-BN0tPQRrwmWVk2md",
+                    "__typename": "Distribution"
+                },
+                {
+                    "status": 3,
+                    "platformType": 2,
+                    "platformId": null,
+                    "platformUrl": "https://www.breaker.audio/shows?feed_url=https%3A%2F%2Fopen.firstory.me%2Frss%2Fuser%2Fckbugenfo7qi10918jxt9doix",
+                    "__typename": "Distribution"
+                },
+                {
+                    "status": 3,
+                    "platformType": 8,
+                    "platformId": null,
+                    "platformUrl": "https://player.fm/series/series-2957332",
+                    "__typename": "Distribution"
+                },
+                {
+                    "status": 3,
+                    "platformType": 3,
+                    "platformId": null,
+                    "platformUrl": "https://castbox.fm/channel/id3067633?utm_campaign=ex_share_ch&utm_medium=exlink",
+                    "__typename": "Distribution"
+                },
+                {
+                    "status": 3,
+                    "platformType": 4,
+                    "platformId": null,
+                    "platformUrl": "https://castro.fm/podcast/28e27a34-f108-40b5-a54c-2b9e88d8b7c1",
+                    "__typename": "Distribution"
+                },
+                {
+                    "status": 3,
+                    "platformType": 10,
+                    "platformId": null,
+                    "platformUrl": "https://podcastaddict.com/feed/https%3A%2F%2Fopen.firstory.me%2Frss%2Fuser%2Fckbugenfo7qi10918jxt9doix",
+                    "__typename": "Distribution"
+                },
+                {
+                    "status": 3,
+                    "platformType": 11,
+                    "platformId": null,
+                    "platformUrl": "https://radiopublic.com/ipodcast-WzdqaK",
+                    "__typename": "Distribution"
+                }
+            ],
+            "externalLinks": [
+                {
+                    "title": null,
+                    "type": 2,
+                    "url": "https://facebook.com/ipodcasttw",
+                    "__typename": "ExternalLink"
+                },
+                {
+                    "title": null,
+                    "type": 3,
+                    "url": "https://instagram.com/flywithlily",
+                    "__typename": "ExternalLink"
+                }
+            ],
+            "websiteSetting": {
+                "active": true,
+                "gaTrackingId": "",
+                "fbPixelId": "",
+                "themeHexFirst": null,
+                "themeHexSecond": null,
+                "themeHexThird": null,
+                "customDomain": null,
+                "flinkShowDonate": null,
+                "flinkShowExternal": null,
+                "flinkShowRssFeed": null,
+                "flinkShowPlatforms": true,
+                "flinkShowComment": null,
+                "flinkShowVoiceMail": null,
+                "flinkShowDownloadAudioFile": null,
+                "playerShowDonate": null,
+                "playerShowRssFeed": null,
+                "playerHideLogo": null,
+                "playerShowShownote": null,
+                "playerShowComment": null,
+                "playerShowVoicemail": null,
+                "playerShowDownloadAudioFile": null,
+                "__typename": "WebsiteSetting"
+            },
+            "__typename": "Show",
+            "episodeCount": 66
+        }
+    }
+}
