@@ -121,6 +121,7 @@ func getFirsotryShowRSSLink(ctx context.Context, jsonStr string) (rssLink string
 	respJson = gjson.New(jsonStr)
 	if respJson == nil || respJson.IsNil() {
 		g.Log().Line().Error(ctx, "Parse firstory show response json failed")
+		return
 	}
 
 	rssLink = respJson.Get("data.playerShowFindOneByUrlSlug.import.originRssUrl").String()
