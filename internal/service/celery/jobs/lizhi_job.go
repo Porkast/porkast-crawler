@@ -20,13 +20,13 @@ func StartLizhiJob(ctx context.Context) {
 
 		for {
 			randomSleepTime = getRandomStartTime()
-			g.Log().Info(ctx, "start lizhi FM entry jobs, sleep random time : ", randomSleepTime)
+			g.Log().Line().Info(ctx, "start lizhi FM entry jobs, sleep random time : ", randomSleepTime)
 			time.Sleep(randomSleepTime)
 			if !isJobStarted(ctx, consts.LIZHI_ENTRY_WORKER) {
 				jobIsStarted(ctx, consts.LIZHI_ENTRY_WORKER)
 				AssignLizhiEntryJob(ctx)
 			} else {
-                g.Log().Info(ctx, "The lizhi FM entry jobs is started, sleep ", refreshTime, " hour")
+                g.Log().Line().Info(ctx, "The lizhi FM entry jobs is started, sleep ", refreshTime, " hour")
             }
 			time.Sleep(refreshTime)
 		}
@@ -40,7 +40,7 @@ func AssignLizhiEntryJob(ctx context.Context) {
 
 	_, err = celery.GetClient().Delay(consts.LIZHI_ENTRY_WORKER, consts.LIZHI_FM_ENTRY_URL)
 	if err != nil {
-		g.Log().Error(ctx, fmt.Sprintf("Assign LIZHI_ENTRY_WORKER with url %s failed : %s", consts.LIZHI_FM_ENTRY_URL, err))
+		g.Log().Line().Error(ctx, fmt.Sprintf("Assign LIZHI_ENTRY_WORKER with url %s failed : %s", consts.LIZHI_FM_ENTRY_URL, err))
 	}
 }
 
@@ -52,7 +52,7 @@ func AssignLizhiCategoryParseJob(ctx context.Context, url string) {
 
 	_, err = celery.GetClient().Delay(consts.LIZHI_CATEGORY_PARSE_WORKER, url)
 	if err != nil {
-		g.Log().Error(ctx, fmt.Sprintf("Assign LIZHI_CATEGORY_PARSE_WORKER with url %s failed : %s", url, err))
+		g.Log().Line().Error(ctx, fmt.Sprintf("Assign LIZHI_CATEGORY_PARSE_WORKER with url %s failed : %s", url, err))
 	}
 }
 
@@ -64,6 +64,6 @@ func AssignLizhiPodcastXmlJob(ctx context.Context, url string) {
 
 	_, err = celery.GetClient().Delay(consts.LIZHI_PODCAST_XML_WORKER, url)
 	if err != nil {
-		g.Log().Error(ctx, fmt.Sprintf("Assign LIZHI_PODCAST_XML_WORKER with url %s failed : %s", url, err))
+		g.Log().Line().Error(ctx, fmt.Sprintf("Assign LIZHI_PODCAST_XML_WORKER with url %s failed : %s", url, err))
 	}
 }

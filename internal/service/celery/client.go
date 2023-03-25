@@ -22,7 +22,7 @@ func InitCeleryClient(ctx context.Context) {
 		redisAddr   *gvar.Var
 		workerCount *gvar.Var
 	)
-	g.Log().Info(ctx, "Start init gocelery client")
+	g.Log().Line().Info(ctx, "Start init gocelery client")
 	redisAddr, _ = g.Cfg().Get(ctx, "redis.default.address")
 	workerCount, _ = g.Cfg().Get(ctx, "celery.worker.count")
 
@@ -44,7 +44,7 @@ func InitCeleryClient(ctx context.Context) {
 	)
 
 	if err != nil {
-		g.Log().Fatal(ctx, "Failed to create new celery client : ", err)
+		g.Log().Line().Fatal(ctx, "Failed to create new celery client : ", err)
 	}
 
 }

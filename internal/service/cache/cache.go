@@ -24,7 +24,7 @@ func InitCache(ctx context.Context) {
 		if err == nil {
 			defaultCache.SetAdapter(gcache.NewAdapterRedis(redisClient))
 		} else {
-			g.Log().Fatal(ctx, "Initial redis failed : ", err)
+			g.Log().Line().Fatal(ctx, "Initial redis failed : ", err)
 		}
 	}
 }

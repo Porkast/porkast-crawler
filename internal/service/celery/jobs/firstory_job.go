@@ -19,13 +19,13 @@ func StartFirstoryJob(ctx context.Context) {
 
 		for {
 			randomSleepTime = getRandomStartTime()
-			g.Log().Info(ctx, "start FIRSTORY FM entry jobs, sleep random time : ", randomSleepTime)
+			g.Log().Line().Info(ctx, "start FIRSTORY FM entry jobs, sleep random time : ", randomSleepTime)
 			time.Sleep(randomSleepTime)
 			if !isJobStarted(ctx, consts.FIRSTORY_ENTRY_JOB) {
 				jobIsStarted(ctx, consts.FIRSTORY_ENTRY_JOB)
 				AssignLizhiEntryJob(ctx)
 			} else {
-				g.Log().Info(ctx, "The FIRSTORY FM entry jobs is started, sleep ", refreshTime, " hour")
+				g.Log().Line().Info(ctx, "The FIRSTORY FM entry jobs is started, sleep ", refreshTime, " hour")
 			}
 			time.Sleep(refreshTime)
 		}
@@ -38,7 +38,7 @@ func AssignFirstoryEntryJob(ctx context.Context) {
 
 	_, err = celery.GetClient().Delay(consts.FIRSTORY_CATEGORY_LIST_JOB)
 	if err != nil {
-		g.Log().Error(ctx, fmt.Sprintf("Assign FIRSTORY_CATEGORY_JOB with failed"))
+		g.Log().Line().Error(ctx, fmt.Sprintf("Assign FIRSTORY_CATEGORY_JOB with failed"))
 	}
 }
 
@@ -47,7 +47,7 @@ func AssignFirstoryCategoryJob(ctx context.Context, categoryId string, skip int)
 
 	_, err = celery.GetClient().Delay(consts.FIRSTORY_CATEGORY_LIST_JOB, categoryId, skip)
 	if err != nil {
-		g.Log().Error(ctx, fmt.Sprintf("Assign FIRSTORY_CATEGORY_JOB with failed"))
+		g.Log().Line().Error(ctx, fmt.Sprintf("Assign FIRSTORY_CATEGORY_JOB with failed"))
 	}
 
 }
@@ -57,6 +57,6 @@ func AssignFirstoryShowRSSJob(ctx context.Context, showId string) {
 
 	_, err = celery.GetClient().Delay(consts.FIRSTORY_CATEGORY_SHOW_RSS_JOB, showId)
 	if err != nil {
-		g.Log().Error(ctx, fmt.Sprintf("Assign FIRSOTRY_SHOW_INFO_JOB with failed"))
+		g.Log().Line().Error(ctx, fmt.Sprintf("Assign FIRSOTRY_SHOW_INFO_JOB with failed"))
 	}
 }

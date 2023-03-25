@@ -38,7 +38,7 @@ func TryGetRSSContent(ctx context.Context, link string) (resp string) {
 		client *gclient.Client
 	)
 	if link == "" {
-		g.Log().Error(ctx, "The request link is empty")
+		g.Log().Line().Error(ctx, "The request link is empty")
 		return
 	}
 	client = GetHttpClient()

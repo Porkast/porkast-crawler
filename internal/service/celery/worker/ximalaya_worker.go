@@ -19,7 +19,7 @@ func ParseXiMaLaYaPodcast(url string) {
 	)
 	time.Sleep(time.Second * 3)
 	podcastUrl = url + ".xml"
-    g.Log().Debug(ctx, "Start parse ximalaya podcast with url : ", podcastUrl)
+    g.Log().Line().Debug(ctx, "Start parse ximalaya podcast with url : ", podcastUrl)
 	respStr = network.TryGetRSSContent(ctx, podcastUrl)
 	if isStringRSSXml(respStr) {
 		//The ximalaya album is RSS
@@ -35,11 +35,11 @@ func ParseXiMaLaYaEntry(url string) {
 		albumUrlList []string
 	)
 
-    g.Log().Debug(ctx, "Start parse ximalaya entry")
+    g.Log().Line().Debug(ctx, "Start parse ximalaya entry")
 	respStr = network.GetContent(ctx, url)
 	respJson = gjson.New(respStr)
 	if respJson == nil {
-		g.Log().Error(ctx, fmt.Sprintf("Parse ximalaya albums response json failed.\nUrl is %s\nResponse String is %s", url, respStr))
+		g.Log().Line().Error(ctx, fmt.Sprintf("Parse ximalaya albums response json failed.\nUrl is %s\nResponse String is %s", url, respStr))
 	}
 
 	albumUrlList = getXimalayaAlbumUrlList(*respJson)
