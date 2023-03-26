@@ -3,14 +3,14 @@ package jobs
 import (
 	"context"
 	"guoshao-fm-crawler/internal/service/cache"
-	"math/rand"
 	"time"
 
 	"github.com/gogf/gf/v2/container/gvar"
+	"github.com/gogf/gf/v2/util/grand"
 )
 
 func randInt(min int, max int) int {
-	return min + rand.Intn(max-min)
+	return grand.N(min, max)
 }
 
 func getRandomStartTime() (startTime time.Duration) {
