@@ -2,6 +2,7 @@ package network
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	"github.com/gogf/gf/v2/os/gctx"
@@ -92,17 +93,18 @@ func TestTryGetRSSContent(t *testing.T) {
 		link string
 	}
 	tests := []struct {
-		name     string
-		args     args
+		name string
+		args args
 	}{
 		{
 			name: "Get rss content",
 			args: args{
-				ctx: gctx.New(),
+				ctx:  gctx.New(),
 				link: "https://open.firstory.me/rss/user/cjfl8pzko3fwb0192dfgrn1so",
 			},
 		},
 	}
+	os.Setenv("env", "dev")
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			var (

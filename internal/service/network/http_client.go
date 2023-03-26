@@ -3,6 +3,7 @@ package network
 import (
 	"context"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -11,8 +12,15 @@ import (
 
 func GetHttpClient() (client *gclient.Client) {
 
+	var (
+		env string
+	)
+	env = os.Getenv("env")
 	client = g.Client()
 	client.SetTimeout(time.Second * 60)
+	if env == "dev" {
+		client.SetProxy("http://127.0.0.1:51491")
+	}
 
 	return
 }
