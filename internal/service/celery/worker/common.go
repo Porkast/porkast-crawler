@@ -42,7 +42,7 @@ func storeFeed(ctx context.Context, respStr string) {
 			feedItemList    []entity.FeedItem
 			feedID          string
 		)
-		feedID = strconv.FormatUint(ghash.RS64([]byte(feed.Description+feed.Title)), 32)
+		feedID = strconv.FormatUint(ghash.RS64([]byte(feed.Link+feed.Title)), 32)
 		feedChannelMode = feedChannelToModel(feedID, *feed)
 		for _, item := range feed.Items {
 			var (
