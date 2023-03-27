@@ -28,7 +28,7 @@ var (
 	}
 )
 
-func initConfig()  {
+func initConfig() {
 	if os.Getenv("env") == "dev" {
 		g.Log().SetLevel(glog.LEVEL_ALL)
 	}
@@ -45,6 +45,7 @@ func initCelery(ctx context.Context) {
 	jobs.StartXiMaLaYaJobs(ctx)
 	jobs.StartLizhiJob(ctx)
 	jobs.StartFirstoryJob(ctx)
+	jobs.StartSpreakerJob(ctx)
 }
 
 func RegisterCeleryWorker() {
@@ -59,6 +60,10 @@ func RegisterCeleryWorker() {
 	celery.GetClient().Register(consts.FIRSTORY_ENTRY_JOB, worker.ParseFistoryAllCategoryList)
 	celery.GetClient().Register(consts.FIRSTORY_CATEGORY_LIST_JOB, worker.ParseFirstoryCategoryItemList)
 	celery.GetClient().Register(consts.FIRSTORY_CATEGORY_SHOW_RSS_JOB, worker.ParseFirstoryShowRSS)
+	// SPREAKER FM
+	celery.GetClient().Register(consts.SPREAKER_ENTRY_JOB, worker.ParseSpreakerAllCategoryList)
+	celery.GetClient().Register(consts.SPREAKER_SINGLE_CATEGORY_JOB, worker.ParseSpreakerSingleCategory)
+	celery.GetClient().Register(consts.SPREAKER_CATEGORY_SHOW_RSS_JOB, worker.ParseSpreakerShowRSS)
 }
 func hold() {
 	select {}
