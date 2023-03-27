@@ -24,6 +24,7 @@ func StartSpreakerJob(ctx context.Context) {
 			time.Sleep(randomSleepTime)
 			if !isJobStarted(ctx, consts.SPREAKER_ENTRY_JOB) {
 				jobIsStarted(ctx, consts.SPREAKER_ENTRY_JOB)
+				AssignSpreakerEntryJob(ctx)
 			} else {
 				g.Log().Line().Info(ctx, "The SPREAKER FM entry jobs is started, sleep ", refreshTime, " hour")
 			}
@@ -32,7 +33,7 @@ func StartSpreakerJob(ctx context.Context) {
 	}(ctx)
 }
 
-func AssignSpreakerEntryJob(ctx context.Context)  {
+func AssignSpreakerEntryJob(ctx context.Context) {
 	var (
 		err error
 	)
@@ -42,8 +43,8 @@ func AssignSpreakerEntryJob(ctx context.Context)  {
 	}
 }
 
-func AssignSpreakerSingleCategoryJob(ctx context.Context, url string)  {
-	
+func AssignSpreakerSingleCategoryJob(ctx context.Context, url string) {
+
 	var (
 		err error
 	)
@@ -53,12 +54,12 @@ func AssignSpreakerSingleCategoryJob(ctx context.Context, url string)  {
 	}
 }
 
-func AssignSpreakerShowRSSJob(ctx context.Context, url string)  {
-	
+func AssignSpreakerShowRSSJob(ctx context.Context, url string) {
+
 	var (
 		err error
 	)
-	_, err = celery.GetClient().Delay(consts.SPREAKER_SINGLE_CATEGORY_JOB, url)
+	_, err = celery.GetClient().Delay(consts.SPREAKER_CATEGORY_SHOW_RSS_JOB, url)
 	if err != nil {
 		g.Log().Line().Error(ctx, fmt.Sprintf("Assign SPREAKER_SINGLE_CATEGORY_JOB with failed"))
 	}

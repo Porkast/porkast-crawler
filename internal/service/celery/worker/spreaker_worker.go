@@ -26,7 +26,11 @@ func ParseSpreakerAllCategoryList() {
 		g.Log().Line().Error(ctx, "Get Spreaker category html failed")
 	}
 	categoryIdList = parseSpreakerCategoryItemList(ctx, categoryStrResp)
-	g.Log().Line().Info(ctx, categoryIdList)
+	for _, categoryId := range categoryIdList {
+		var url string
+		url = consts.SPREAKER_BASE_URL + categoryId
+		jobs.AssignSpreakerSingleCategoryJob(ctx, url)
+	}
 }
 
 func ParseSpreakerSingleCategory(url string) {
@@ -37,17 +41,22 @@ func ParseSpreakerSingleCategory(url string) {
 		showUrls []string
 	)
 
+	g.Log().Line().Debug(ctx, "Start parse spreaker single category")
 	respStr = network.GetContent(ctx, url)
 	nextUrl = getSpreakerCategoryNextUrl(respStr)
 	showUrls = getSpreakerShowLinks(respStr)
 	if nextUrl != "" {
 		jobs.AssignSpreakerSingleCategoryJob(ctx, nextUrl)
+	} else {
+		g.Log().Line().Error(ctx, fmt.Sprintf("The spreaker next url is empty by url %s", url))
 	}
 
 	if len(showUrls) > 0 {
 		for _, showUrl := range showUrls {
 			jobs.AssignSpreakerShowRSSJob(ctx, showUrl)
 		}
+	} else {
+		g.Log().Line().Error(ctx, fmt.Sprintf("The spreaker show url list is empty from %s", url))
 	}
 
 }
@@ -60,6 +69,7 @@ func ParseSpreakerShowRSS(url string) {
 		rssResp  string
 	)
 
+	g.Log().Line().Debug(ctx, "Start parse spreaker show RSS")
 	showResp = network.GetContent(ctx, url)
 	if showResp == "" {
 		g.Log().Line().Error(ctx, fmt.Sprintf("Get Spreaker show response from %s is empty", url))
