@@ -42,10 +42,11 @@ func initCelery(ctx context.Context) {
 	celery.InitCeleryClient(ctx)
 	RegisterCeleryWorker()
 	celery.GetClient().StartWorker()
-	jobs.StartXiMaLaYaJobs(ctx)
-	jobs.StartLizhiJob(ctx)
-	jobs.StartFirstoryJob(ctx)
-	jobs.StartSpreakerJob(ctx)
+	// jobs.StartXiMaLaYaJobs(ctx)
+	// jobs.StartLizhiJob(ctx)
+	// jobs.StartFirstoryJob(ctx)
+	// jobs.StartSpreakerJob(ctx)
+	jobs.StartPodbeanJob(ctx)
 }
 
 func RegisterCeleryWorker() {
@@ -64,6 +65,10 @@ func RegisterCeleryWorker() {
 	celery.GetClient().Register(consts.SPREAKER_ENTRY_JOB, worker.ParseSpreakerAllCategoryList)
 	celery.GetClient().Register(consts.SPREAKER_SINGLE_CATEGORY_JOB, worker.ParseSpreakerSingleCategory)
 	celery.GetClient().Register(consts.SPREAKER_CATEGORY_SHOW_RSS_JOB, worker.ParseSpreakerShowRSS)
+	// PODBEAN FM
+	celery.GetClient().Register(consts.PODBEAN_ENTRY_JOB, worker.ParsePodbeanAllcategoryList)
+	celery.GetClient().Register(consts.PODBEAN_ALL_CATEGORY_POPULAR_JOB, worker.ParsePodbeancategoryPopularShow)
+	celery.GetClient().Register(consts.PODBEAN_RSS_JOB, worker.ParsePodbeanShowRSS)
 }
 func hold() {
 	select {}
