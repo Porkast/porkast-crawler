@@ -42,10 +42,10 @@ func initCelery(ctx context.Context) {
 	celery.InitCeleryClient(ctx)
 	RegisterCeleryWorker()
 	celery.GetClient().StartWorker()
-	// jobs.StartXiMaLaYaJobs(ctx)
-	// jobs.StartLizhiJob(ctx)
-	// jobs.StartFirstoryJob(ctx)
-	// jobs.StartSpreakerJob(ctx)
+	jobs.StartXiMaLaYaJobs(ctx)
+	jobs.StartLizhiJob(ctx)
+	jobs.StartFirstoryJob(ctx)
+	jobs.StartSpreakerJob(ctx)
 	jobs.StartPodbeanJob(ctx)
 }
 
