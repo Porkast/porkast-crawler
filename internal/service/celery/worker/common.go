@@ -67,20 +67,38 @@ func storeFeed(ctx context.Context, respStr string) {
 
 func feedChannelToModel(uid string, feed gofeed.Feed) (model entity.FeedChannel) {
 
+	var (
+		authorList []string
+	)
 	model = entity.FeedChannel{
 		Id:          uid,
 		Title:       feed.Title,
 		ChannelDesc: feed.Description,
-		ImageUrl:    feed.Image.URL,
 		Link:        feed.Link,
 		FeedLink:    feed.FeedLink,
 		Copyright:   feed.Copyright,
 		Language:    feed.Language,
-		Author:      feed.Author.Name,
-		OwnerName:   feed.ITunesExt.Owner.Name,
-		OwnerEmail:  feed.ITunesExt.Owner.Email,
 		FeedType:    feed.FeedType,
 		Categories:  gstr.Join(feed.Categories, ","),
+	}
+
+	authorList = make([]string, 0)
+	for _, authorItem := range feed.Authors {
+		var (
+			author string
+		)
+		author = authorItem.Name + "|" + authorItem.Email
+		authorList = append(authorList, author)
+	}
+
+	model.Author = gstr.Join(authorList, ",")
+	if feed.ITunesExt != nil && feed.ITunesExt.Owner != nil {
+		model.OwnerName = feed.ITunesExt.Owner.Name
+		model.OwnerEmail = feed.ITunesExt.Owner.Email
+	}
+
+	if feed.Image != nil {
+		model.ImageUrl = feed.Image.URL
 	}
 
 	return
