@@ -20,13 +20,13 @@ func StartPodbeanJob(ctx context.Context) {
 
 		for {
 			randomSleepTime = getRandomStartTime()
-			g.Log().Line().Info(ctx, "start SPREAKER FM entry jobs, sleep random time : ", randomSleepTime)
+			g.Log().Line().Info(ctx, "start PODBEAN FM entry jobs, sleep random time : ", randomSleepTime)
 			time.Sleep(randomSleepTime)
 			if !isJobStarted(ctx, consts.PODBEAN_ENTRY_JOB) {
 				jobIsStarted(ctx, consts.PODBEAN_ENTRY_JOB)
 				AssignPodbeanEntryJob(ctx)
 			} else {
-				g.Log().Line().Info(ctx, "The SPREAKER FM entry jobs is started, sleep ", refreshTime, " hour")
+				g.Log().Line().Info(ctx, "The PODBEAN FM entry jobs is started, sleep ", refreshTime, " hour")
 			}
 			time.Sleep(refreshTime)
 		}
@@ -37,7 +37,7 @@ func AssignPodbeanEntryJob(ctx context.Context) {
 	var (
 		err error
 	)
-	_, err = celery.GetClient().Delay(consts.PODBEAN_ENTRY_JOB)
+	_, err = celery.GetClient().Delay(consts.PODBEAN_ENTRY_JOB, consts.PODBEAN_ALL_CATEGORY_URL)
 	if err != nil {
 		g.Log().Line().Error(ctx, fmt.Sprintf("Assign PODBEAN_ENTRY_JOB with failed"))
 	}
@@ -47,7 +47,7 @@ func AssignPodbeanCategoryPopularListJob(ctx context.Context, category string, p
 	var (
 		err error
 	)
-	_, err = celery.GetClient().Delay(consts.PODBEAN_ALL_CATEGORY_POPULAR_JOB, category, 0)
+	_, err = celery.GetClient().Delay(consts.PODBEAN_ALL_CATEGORY_POPULAR_JOB, category, 1)
 	if err != nil {
 		g.Log().Line().Error(ctx, fmt.Sprintf("Assign PODBEAN_ALL_CATEGORY_POPULAR_JOB with failed"))
 	}
