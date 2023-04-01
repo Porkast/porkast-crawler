@@ -2,12 +2,14 @@ package worker
 
 import (
 	"context"
+	"fmt"
 	"guoshao-fm-crawler/internal/model/entity"
 	"guoshao-fm-crawler/internal/service/internal/dao"
 	"guoshao-fm-crawler/utility"
 	"strconv"
 
 	"github.com/gogf/gf/v2/encoding/ghash"
+	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/mmcdole/gofeed"
@@ -36,6 +38,11 @@ func storeFeed(ctx context.Context, respStr string) {
 		feed *gofeed.Feed
 	)
 	feed = utility.ParseFeed(ctx, respStr)
+	defer func(ctx context.Context) {
+		if rec := recover(); rec != nil {
+			g.Log().Line().Error(ctx, fmt.Sprintf("Store feed failed:\n%s\nThe feed string :\n%s\n", rec, respStr))
+		}
+	}(ctx)
 	if feed != nil {
 		var (
 			feedChannelMode entity.FeedChannel
