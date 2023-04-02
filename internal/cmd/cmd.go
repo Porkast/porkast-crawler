@@ -9,9 +9,8 @@ import (
 	"guoshao-fm-crawler/internal/service/celery/worker"
 	"os"
 
-	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcmd"
-	"github.com/gogf/gf/v2/os/glog"
+	"github.com/gogf/gf/v2/os/genv"
 )
 
 var (
@@ -20,6 +19,7 @@ var (
 		Usage: "main",
 		Brief: "start podcast crawler",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
+			initConfig()
 			initCache(ctx)
 			initCelery(ctx)
 			hold()
@@ -30,7 +30,7 @@ var (
 
 func initConfig() {
 	if os.Getenv("env") == "dev" {
-		g.Log().SetLevel(glog.LEVEL_ALL)
+		genv.Set("GF_GCFG_FILE", "config-dev.yaml")
 	}
 }
 
