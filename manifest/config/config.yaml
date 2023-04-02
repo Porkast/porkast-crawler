@@ -32,7 +32,7 @@ database:
 
 redis:
   default:
-    address: 127.0.0.1:6379
+    address: 47.242.232.137
     db: 1
     pass: 123456
 
