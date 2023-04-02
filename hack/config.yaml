@@ -9,7 +9,6 @@ gfcli:
     arch: "amd64"
     system: "linux"
     path: "./bin"
-    mod: "none"
     packSrc: "resource,manifest"
     # version: "v1.0.0"
     extra: "-trimpath"
