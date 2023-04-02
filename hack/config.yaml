@@ -4,3 +4,12 @@ gfcli:
   gen:
     dao:
       - link: "mysql:guoshaofm:qazxsw@tcp(127.0.0.1:3306)/guoshaofmdb?loc=Local&parseTime=true"
+  build:
+    name: "guoshaofm-crawler"
+    arch: "amd64"
+    system: "linux"
+    path: "./bin"
+    mod: "none"
+    packSrc: "resource,manifest"
+    # version: "v1.0.0"
+    extra: "-trimpath"
