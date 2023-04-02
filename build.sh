@@ -1,0 +1,1 @@
+gf build main.go -n guoshaofm-crawler -trimpath --pack resource,manifest -a amd64 -s linux -p ./bin

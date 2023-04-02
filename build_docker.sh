@@ -1,0 +1,1 @@
+docker build -t beegedelow/guoshaofm-crawler -f ./manifest/docker/Dockerfile .
