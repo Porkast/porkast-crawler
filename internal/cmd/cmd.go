@@ -7,6 +7,7 @@ import (
 	"guoshao-fm-crawler/internal/service/celery"
 	"guoshao-fm-crawler/internal/service/celery/jobs"
 	"guoshao-fm-crawler/internal/service/celery/worker"
+	"guoshao-fm-crawler/internal/service/elasticsearch"
 	"os"
 
 	"github.com/gogf/gf/v2/os/gcmd"
@@ -20,7 +21,7 @@ var (
 		Brief: "start podcast crawler",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			initConfig()
-			initCache(ctx)
+			initComponent(ctx)
 			initCelery(ctx)
 			hold()
 			return
@@ -34,8 +35,9 @@ func initConfig() {
 	}
 }
 
-func initCache(ctx context.Context) {
+func initComponent(ctx context.Context) {
 	cache.InitCache(ctx)
+	elasticsearch.InitES(ctx)
 }
 
 func initCelery(ctx context.Context) {
