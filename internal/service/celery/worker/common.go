@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"guoshao-fm-crawler/internal/model/entity"
+	"guoshao-fm-crawler/internal/service/elasticsearch"
 	"guoshao-fm-crawler/internal/service/internal/dao"
 	"guoshao-fm-crawler/utility"
 	"strconv"
@@ -62,6 +63,8 @@ func storeFeed(ctx context.Context, respStr string) {
 		for _, item := range feedItemList {
 			dao.InsertFeedItemIfNotExist(ctx, item)
 		}
+		elasticsearch.InsertFeedChannel(ctx, feedChannelMode)
+		elasticsearch.InsertFeedItem(ctx, feedItemList)
 	}
 }
 
