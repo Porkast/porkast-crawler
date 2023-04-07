@@ -65,9 +65,11 @@ func storeFeed(ctx context.Context, respStr string) {
 			elasticsearch.Client().InsertFeedChannel(ctx, feedChannelMode)
 		}
 		for _, item := range feedItemList {
-			dao.InsertFeedItemIfNotExist(ctx, item)
+			err = dao.InsertFeedItemIfNotExist(ctx, item)
+			if err == nil {
+				elasticsearch.Client().InsertFeedItem(ctx, item)
+			}
 		}
-		elasticsearch.Client().InsertFeedItemList(ctx, feedItemList)
 	}
 }
 

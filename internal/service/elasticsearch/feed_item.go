@@ -80,7 +80,7 @@ const feedItemMapping = `
 }
 `
 
-func(c *GSElastic) CreateFeedItemIndexIfNotExit(ctx context.Context) {
+func (c *GSElastic) CreateFeedItemIndexIfNotExit(ctx context.Context) {
 	exists, err := c.Client.IndexExists("feed_item").Do(ctx)
 	if err != nil {
 		panic(err)
@@ -97,10 +97,10 @@ func(c *GSElastic) CreateFeedItemIndexIfNotExit(ctx context.Context) {
 
 }
 
-func(c *GSElastic) InsertFeedItemList(ctx context.Context, feedItemList []entity.FeedItem) {
-    if len(feedItemList) == 0 {
-        return
-    }
+func (c *GSElastic) InsertFeedItemList(ctx context.Context, feedItemList []entity.FeedItem) {
+	if len(feedItemList) == 0 {
+		return
+	}
 	bulkRequest := c.Client.Bulk()
 	for _, feedItem := range feedItemList {
 		esFeedItem := entity.FeedItemESData{}
@@ -113,4 +113,15 @@ func(c *GSElastic) InsertFeedItemList(ctx context.Context, feedItemList []entity
 		respStr := gjson.New(resp)
 		g.Log().Line().Errorf(ctx, "bulk index request failed\nError message : %s \nResponse : %s", err, respStr)
 	}
+}
+
+func (c *GSElastic) InsertFeedItem(ctx context.Context, feedItem entity.FeedItem) (err error) {
+	g.Log().Line().Debugf(ctx, "Insert feed item %s to elasticsearch", feedItem.Title)
+	_, err = elastic.NewIndexService(c.Client).Index("feed_item").Id(feedItem.Id).BodyJson(feedItem).Do(ctx)
+	if err != nil {
+		g.Log().Line().Errorf(ctx, "Insert feed item %s to elasticsearch failed %s", feedItem.Title, err)
+		return
+	}
+
+	return
 }
