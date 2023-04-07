@@ -80,7 +80,7 @@ const feedItemMapping = `
 }
 `
 
-func(c *ESClient) CreateFeedItemIndexIfNotExit(ctx context.Context) {
+func(c *GSElastic) CreateFeedItemIndexIfNotExit(ctx context.Context) {
 	exists, err := c.Client.IndexExists("feed_item").Do(ctx)
 	if err != nil {
 		panic(err)
@@ -97,7 +97,7 @@ func(c *ESClient) CreateFeedItemIndexIfNotExit(ctx context.Context) {
 
 }
 
-func(c *ESClient) InsertFeedItemList(ctx context.Context, feedItemList []entity.FeedItem) {
+func(c *GSElastic) InsertFeedItemList(ctx context.Context, feedItemList []entity.FeedItem) {
     if len(feedItemList) == 0 {
         return
     }

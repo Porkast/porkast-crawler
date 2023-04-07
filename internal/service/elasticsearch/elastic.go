@@ -8,11 +8,11 @@ import (
 	"github.com/olivere/elastic/v7"
 )
 
-type ESClient struct {
+type GSElastic struct {
 	Client *elastic.Client
 }
 
-var esClient *ESClient
+var gdElastic *GSElastic
 
 func InitES(ctx context.Context) {
 	var (
@@ -28,14 +28,14 @@ func InitES(ctx context.Context) {
 	password, _ = g.Cfg().Get(ctx, "elastic.password")
 	url = host.String() + ":" + port.String()
 	var err error
-	esClient = &ESClient{}
-	esClient.Client, err = elastic.NewClient(elastic.SetURL(url), elastic.SetSniff(false), elastic.SetHealthcheck(false), elastic.SetBasicAuth(username.String(), password.String()))
+	gdElastic = &GSElastic{}
+	gdElastic.Client, err = elastic.NewClient(elastic.SetURL(url), elastic.SetSniff(false), elastic.SetHealthcheck(false), elastic.SetBasicAuth(username.String(), password.String()))
 	if err != nil {
 		panic(err)
 	}
 
 	// Ping the Elasticsearch server to get e.g. the version number
-	info, code, err := esClient.Client.Ping(url).Do(ctx)
+	info, code, err := gdElastic.Client.Ping(url).Do(ctx)
 	if err != nil {
 		// Handle error
 		panic(err)
@@ -43,7 +43,7 @@ func InitES(ctx context.Context) {
 	g.Log().Line().Infof(ctx, "Elasticsearch returned with code %d and version %s", code, info.Version.Number)
 
 	// Getting the ES version number is quite common, so there's a shortcut
-	esVersion, err := esClient.Client.ElasticsearchVersion(url)
+	esVersion, err := gdElastic.Client.ElasticsearchVersion(url)
 	if err != nil {
 		// Handle error
 		panic(err)
@@ -51,6 +51,6 @@ func InitES(ctx context.Context) {
 	g.Log().Line().Infof(ctx, "Elasticsearch version %s", esVersion)
 }
 
-func Client() *ESClient {
-	return esClient
+func Client() *GSElastic {
+	return gdElastic
 }
