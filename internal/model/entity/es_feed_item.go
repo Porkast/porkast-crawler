@@ -20,4 +20,7 @@ type FeedItemESData struct {
 	Season          string      `json:"season"          ` //
 	EpisodeType     string      `json:"episodeType"     ` //
 	Description     string      `json:"description"     ` //
+	ChannelImageUrl string      `json:"channelImageUrl" ` //
+	ChannelTitle    string      `json:"channelTitle"    ` //
+	SourceLink      string      `json:"sourceLink"      ` //
 }

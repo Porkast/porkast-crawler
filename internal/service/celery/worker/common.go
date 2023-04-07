@@ -13,6 +13,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/text/gstr"
+	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/mmcdole/gofeed"
 )
 
@@ -67,7 +68,12 @@ func storeFeed(ctx context.Context, respStr string) {
 		for _, item := range feedItemList {
 			err = dao.InsertFeedItemIfNotExist(ctx, item)
 			if err == nil {
-				elasticsearch.Client().InsertFeedItem(ctx, item)
+				var esFeedItem entity.FeedItemESData
+				gconv.Struct(item, &esFeedItem)
+				esFeedItem.ChannelImageUrl = feedChannelMode.ImageUrl
+				esFeedItem.ChannelTitle = feedChannelMode.Title
+				esFeedItem.SourceLink = feedChannelMode.Link
+				elasticsearch.Client().InsertFeedItem(ctx, esFeedItem)
 			}
 		}
 	}

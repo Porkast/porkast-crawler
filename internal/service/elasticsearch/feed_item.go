@@ -97,7 +97,7 @@ func (c *GSElastic) CreateFeedItemIndexIfNotExit(ctx context.Context) {
 
 }
 
-func (c *GSElastic) InsertFeedItemList(ctx context.Context, feedItemList []entity.FeedItem) {
+func (c *GSElastic) InsertFeedItemList(ctx context.Context, feedChannel entity.FeedChannel, feedItemList []entity.FeedItem) {
 	if len(feedItemList) == 0 {
 		return
 	}
@@ -105,6 +105,9 @@ func (c *GSElastic) InsertFeedItemList(ctx context.Context, feedItemList []entit
 	for _, feedItem := range feedItemList {
 		esFeedItem := entity.FeedItemESData{}
 		gconv.Struct(feedItem, &esFeedItem)
+        esFeedItem.ChannelImageUrl = feedChannel.ImageUrl
+        esFeedItem.ChannelTitle = feedChannel.Title
+        esFeedItem.SourceLink = feedChannel.Link
 		indexReq := elastic.NewBulkIndexRequest().Index("feed_item").Id(feedItem.Id).Doc(esFeedItem)
 		bulkRequest.Add(indexReq)
 	}
@@ -115,7 +118,7 @@ func (c *GSElastic) InsertFeedItemList(ctx context.Context, feedItemList []entit
 	}
 }
 
-func (c *GSElastic) InsertFeedItem(ctx context.Context, feedItem entity.FeedItem) (err error) {
+func (c *GSElastic) InsertFeedItem(ctx context.Context, feedItem entity.FeedItemESData) (err error) {
 	g.Log().Line().Debugf(ctx, "Insert feed item %s to elasticsearch", feedItem.Title)
 	_, err = elastic.NewIndexService(c.Client).Index("feed_item").Id(feedItem.Id).BodyJson(feedItem).Do(ctx)
 	if err != nil {
