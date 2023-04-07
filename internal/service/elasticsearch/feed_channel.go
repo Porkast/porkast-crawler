@@ -70,14 +70,14 @@ const feedChannelMapping = `
 }
 `
 
-func CreateFeedChannelIndexIfNotExit(ctx context.Context) {
-	exists, err := esClient.IndexExists("feed_channel").Do(ctx)
+func (c *ESClient) CreateFeedChannelIndexIfNotExit(ctx context.Context) {
+	exists, err := c.Client.IndexExists("feed_channel").Do(ctx)
 	if err != nil {
 		panic(err)
 	}
 	if !exists {
 		// Create a new index.
-		createIndex, err := esClient.CreateIndex("feed_channel").BodyString(feedChannelMapping).Do(ctx)
+		createIndex, err := c.Client.CreateIndex("feed_channel").BodyString(feedChannelMapping).Do(ctx)
 		if err != nil {
 			panic(err)
 		}
@@ -87,8 +87,9 @@ func CreateFeedChannelIndexIfNotExit(ctx context.Context) {
 
 }
 
-func InsertFeedChannel(ctx context.Context, feedChannel entity.FeedChannel) {
-	bulkRequest := esClient.Bulk()
+func (c *ESClient) InsertFeedChannel(ctx context.Context, feedChannel entity.FeedChannel) {
+	g.Log().Line().Debugf(ctx, "Insert feed channel %s to elasticsearch", feedChannel.Title)
+	bulkRequest := c.Client.Bulk()
 	esFeedChannel := entity.FeedChannelESData{}
 	gconv.Struct(feedChannel, &esFeedChannel)
 	indexReq := elastic.NewBulkIndexRequest().Index("feed_channel").Id(feedChannel.Id).Doc(esFeedChannel)

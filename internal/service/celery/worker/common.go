@@ -46,6 +46,7 @@ func storeFeed(ctx context.Context, respStr string) {
 	}(ctx)
 	if feed != nil {
 		var (
+			err             error
 			feedChannelMode entity.FeedChannel
 			feedItemList    []entity.FeedItem
 			feedID          string
@@ -59,12 +60,14 @@ func storeFeed(ctx context.Context, respStr string) {
 			feedItem = feedItemToModel(feedID, *item)
 			feedItemList = append(feedItemList, feedItem)
 		}
-		dao.InsertFeedChannelIfNotExist(ctx, feedChannelMode)
+		err = dao.InsertFeedChannelIfNotExist(ctx, feedChannelMode)
+		if err == nil {
+			elasticsearch.Client().InsertFeedChannel(ctx, feedChannelMode)
+		}
 		for _, item := range feedItemList {
 			dao.InsertFeedItemIfNotExist(ctx, item)
 		}
-		elasticsearch.InsertFeedChannel(ctx, feedChannelMode)
-		elasticsearch.InsertFeedItem(ctx, feedItemList)
+		elasticsearch.Client().InsertFeedItemList(ctx, feedItemList)
 	}
 }
 

@@ -6,10 +6,12 @@ package dao
 
 import (
 	"context"
+	"errors"
 	"guoshao-fm-crawler/internal/model/entity"
 	"guoshao-fm-crawler/internal/service/internal/dao/internal"
 
 	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 // feedChannelDao is the data access object for table feed_channel.
@@ -33,7 +35,10 @@ func InsertFeedChannelIfNotExist(ctx context.Context, model entity.FeedChannel) 
 	)
 	result, _ = FeedChannel.Ctx(ctx).Where("id=?", model.Id).One()
 	if result.IsEmpty() {
+		g.Log().Line().Debugf(ctx, "Insert feed channel %s to DB", model.Title)
 		_, err = FeedChannel.Ctx(ctx).Insert(model)
+	} else {
+		return errors.New("The Feed Channel is exist")
 	}
 	return err
 }

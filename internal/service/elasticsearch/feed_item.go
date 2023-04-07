@@ -80,14 +80,14 @@ const feedItemMapping = `
 }
 `
 
-func CreateFeedItemIndexIfNotExit(ctx context.Context) {
-	exists, err := esClient.IndexExists("feed_item").Do(ctx)
+func(c *ESClient) CreateFeedItemIndexIfNotExit(ctx context.Context) {
+	exists, err := c.Client.IndexExists("feed_item").Do(ctx)
 	if err != nil {
 		panic(err)
 	}
 	if !exists {
 		// Create a new index.
-		createIndex, err := esClient.CreateIndex("feed_item").BodyString(feedItemMapping).Do(ctx)
+		createIndex, err := c.Client.CreateIndex("feed_item").BodyString(feedItemMapping).Do(ctx)
 		if err != nil {
 			panic(err)
 		}
@@ -97,11 +97,11 @@ func CreateFeedItemIndexIfNotExit(ctx context.Context) {
 
 }
 
-func InsertFeedItem(ctx context.Context, feedItemList []entity.FeedItem) {
+func(c *ESClient) InsertFeedItemList(ctx context.Context, feedItemList []entity.FeedItem) {
     if len(feedItemList) == 0 {
         return
     }
-	bulkRequest := esClient.Bulk()
+	bulkRequest := c.Client.Bulk()
 	for _, feedItem := range feedItemList {
 		esFeedItem := entity.FeedItemESData{}
 		gconv.Struct(feedItem, &esFeedItem)

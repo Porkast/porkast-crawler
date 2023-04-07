@@ -11,6 +11,7 @@ import (
 	"guoshao-fm-crawler/internal/service/internal/dao/internal"
 
 	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 // feedItemDao is the data access object for table feed_item.
@@ -42,6 +43,7 @@ func InsertFeedItemIfNotExist(ctx context.Context, model entity.FeedItem) (err e
 		return errors.New("The feed item is exist.")
 	}
 
+	g.Log().Line().Debugf(ctx, "Insert feed item %s to DB", model.Title)
 	_, err = FeedItem.Ctx(ctx).Insert(model)
 
 	return
