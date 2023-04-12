@@ -72,7 +72,7 @@ func storeFeed(ctx context.Context, respStr string) {
 				gconv.Struct(item, &esFeedItem)
 				esFeedItem.ChannelImageUrl = feedChannelMode.ImageUrl
 				esFeedItem.ChannelTitle = feedChannelMode.Title
-				esFeedItem.SourceLink = feedChannelMode.Link
+				esFeedItem.FeedLink = feedChannelMode.FeedLink
 				elasticsearch.Client().InsertFeedItem(ctx, esFeedItem)
 			}
 		}

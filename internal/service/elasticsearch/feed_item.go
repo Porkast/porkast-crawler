@@ -107,7 +107,7 @@ func (c *GSElastic) InsertFeedItemList(ctx context.Context, feedChannel entity.F
 		gconv.Struct(feedItem, &esFeedItem)
         esFeedItem.ChannelImageUrl = feedChannel.ImageUrl
         esFeedItem.ChannelTitle = feedChannel.Title
-        esFeedItem.SourceLink = feedChannel.Link
+        esFeedItem.FeedLink = feedChannel.FeedLink
 		indexReq := elastic.NewBulkIndexRequest().Index("feed_item").Id(feedItem.Id).Doc(esFeedItem)
 		bulkRequest.Add(indexReq)
 	}
