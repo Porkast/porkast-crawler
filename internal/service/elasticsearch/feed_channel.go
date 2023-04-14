@@ -4,6 +4,7 @@ import (
 	"context"
 	"guoshao-fm-crawler/internal/model/entity"
 
+	"github.com/anaskhan96/soup"
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -92,6 +93,8 @@ func (c *GSElastic) InsertFeedChannel(ctx context.Context, feedChannel entity.Fe
 	bulkRequest := c.Client.Bulk()
 	esFeedChannel := entity.FeedChannelESData{}
 	gconv.Struct(feedChannel, &esFeedChannel)
+	rootDocs := soup.HTMLParse(feedChannel.ChannelDesc)
+	esFeedChannel.TextChannelDesc = rootDocs.FullText()
 	indexReq := elastic.NewBulkIndexRequest().Index("feed_channel").Id(feedChannel.Id).Doc(esFeedChannel)
 	bulkRequest.Add(indexReq)
 	resp, err := bulkRequest.Do(ctx)

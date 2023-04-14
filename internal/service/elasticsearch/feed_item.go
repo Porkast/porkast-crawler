@@ -4,6 +4,7 @@ import (
 	"context"
 	"guoshao-fm-crawler/internal/model/entity"
 
+	"github.com/anaskhan96/soup"
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -105,9 +106,9 @@ func (c *GSElastic) InsertFeedItemList(ctx context.Context, feedChannel entity.F
 	for _, feedItem := range feedItemList {
 		esFeedItem := entity.FeedItemESData{}
 		gconv.Struct(feedItem, &esFeedItem)
-        esFeedItem.ChannelImageUrl = feedChannel.ImageUrl
-        esFeedItem.ChannelTitle = feedChannel.Title
-        esFeedItem.FeedLink = feedChannel.FeedLink
+		esFeedItem.ChannelImageUrl = feedChannel.ImageUrl
+		esFeedItem.ChannelTitle = feedChannel.Title
+		esFeedItem.FeedLink = feedChannel.FeedLink
 		indexReq := elastic.NewBulkIndexRequest().Index("feed_item").Id(feedItem.Id).Doc(esFeedItem)
 		bulkRequest.Add(indexReq)
 	}
@@ -120,7 +121,11 @@ func (c *GSElastic) InsertFeedItemList(ctx context.Context, feedChannel entity.F
 
 func (c *GSElastic) InsertFeedItem(ctx context.Context, feedItem entity.FeedItemESData) (err error) {
 	g.Log().Line().Debugf(ctx, "Insert feed item %s to elasticsearch", feedItem.Title)
-	_, err = elastic.NewIndexService(c.Client).Index("feed_item").Id(feedItem.Id).BodyJson(feedItem).Do(ctx)
+	esFeedItem := entity.FeedItemESData{}
+	gconv.Struct(feedItem, &esFeedItem)
+	rootDocs := soup.HTMLParse(feedItem.Description)
+	esFeedItem.Description = rootDocs.FullText()
+	_, err = elastic.NewIndexService(c.Client).Index("feed_item").Id(feedItem.Id).BodyJson(esFeedItem).Do(ctx)
 	if err != nil {
 		g.Log().Line().Errorf(ctx, "Insert feed item %s to elasticsearch failed %s", feedItem.Title, err)
 		return
