@@ -20,7 +20,7 @@ func ParseLizhiAllCategories(url string) {
 		categoryUrlList []string
 	)
 
-    g.Log().Line().Debug(ctx, "Start parse lizhi all category")
+	g.Log().Line().Debug(ctx, "Start parse lizhi all category")
 	homePageRespStr = network.GetContent(ctx, url)
 	if homePageRespStr == "" {
 		g.Log().Line().Error(ctx, "Get Lizhi FM home page failed")
@@ -42,7 +42,7 @@ func ParseLizhiPodcastByCategoryPage(url string) {
 		nextCategoryUrl     string
 	)
 
-    g.Log().Line().Debug(ctx, "Start parse lizhi category page")
+	g.Log().Line().Debug(ctx, "Start parse lizhi category page")
 	categoryPageRespStr = network.GetContent(ctx, url)
 	if categoryPageRespStr == "" {
 		g.Log().Line().Error(ctx, "Get Lizhi FM category page failed")
@@ -66,11 +66,11 @@ func ParseLizhiPodcastByCategoryPage(url string) {
 
 func ParseLizhiPodcastRSS(url string) {
 	var (
-		ctx        = gctx.New()
-		respStr    string
+		ctx     = gctx.New()
+		respStr string
 	)
 
-    g.Log().Line().Debug(ctx, "Start parse lizhi RSS with url : ", url)
+	g.Log().Line().Debug(ctx, "Start parse lizhi RSS with url : ", url)
 	respStr = network.TryGetRSSContent(ctx, url)
 	if isStringRSSXml(respStr) {
 		//The lizhi fm radio is RSS

@@ -34,7 +34,7 @@ func initRedisConfig(ctx context.Context) *gredis.Config {
 	redisConfig.Address = redisAddr.String()
 	redisConfig.Db = db.Int()
 	// redisConfig.Pass = pass.String()
-    g.Log().Warning(ctx, "The redis is not set password, the config password is ", pass)
+	g.Log().Warning(ctx, "The redis is not set password, the config password is ", pass)
 
 	return redisConfig
 }

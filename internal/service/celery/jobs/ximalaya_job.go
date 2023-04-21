@@ -34,8 +34,8 @@ func StartXiMaLaYaJobs(ctx context.Context) {
 		)
 
 		for {
-            randomSleepTime = getRandomStartTime()
-            g.Log().Line().Info(ctx, "start ximalaya jobs, sleep random time : ", randomSleepTime)
+			randomSleepTime = getRandomStartTime()
+			g.Log().Line().Info(ctx, "start ximalaya jobs, sleep random time : ", randomSleepTime)
 			time.Sleep(randomSleepTime)
 			AssignXiMaLaYaEntryJob(ctx)
 			time.Sleep(refreshTime)
@@ -65,8 +65,8 @@ func AssignXiMaLaYaEntryJob(ctx context.Context) {
 					g.Log().Line().Error(ctx, fmt.Sprintf("Assign XIMALAYA_ENTRY_WORKER with url %s failed : %s", url, err))
 				}
 			} else {
-                g.Log().Line().Info(ctx, "The ximalaya FM entry jobs is started")
-            }
+				g.Log().Line().Info(ctx, "The ximalaya FM entry jobs is started")
+			}
 		}
 	}
 

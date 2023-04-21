@@ -26,8 +26,8 @@ func StartLizhiJob(ctx context.Context) {
 				jobIsStarted(ctx, consts.LIZHI_ENTRY_WORKER)
 				AssignLizhiEntryJob(ctx)
 			} else {
-                g.Log().Line().Info(ctx, "The lizhi FM entry jobs is started, sleep ", refreshTime, " hour")
-            }
+				g.Log().Line().Info(ctx, "The lizhi FM entry jobs is started, sleep ", refreshTime, " hour")
+			}
 			time.Sleep(refreshTime)
 		}
 	}(ctx)

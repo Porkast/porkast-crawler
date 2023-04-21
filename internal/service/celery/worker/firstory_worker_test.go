@@ -202,7 +202,7 @@ func Test_getFirsotryShowRSSLink(t *testing.T) {
 		{
 			name: "Parse internal show RSS",
 			args: args{
-				ctx: gctx.New(),
+				ctx:     gctx.New(),
 				jsonStr: gfile.GetContents("./testdata/firsotry_category_list.json"),
 			},
 			isExternalLink: false,
@@ -210,7 +210,7 @@ func Test_getFirsotryShowRSSLink(t *testing.T) {
 		{
 			name: "Parse external show RSS",
 			args: args{
-				ctx: gctx.New(),
+				ctx:     gctx.New(),
 				jsonStr: gfile.GetContents("./testdata/firstory_show_resp_external_rss.json"),
 			},
 			isExternalLink: true,
@@ -222,7 +222,7 @@ func Test_getFirsotryShowRSSLink(t *testing.T) {
 				rssLink string
 			)
 			rssLink = getFirsotryShowRSSLink(tt.args.ctx, tt.args.jsonStr)
-			if tt.isExternalLink && gstr.HasPrefix(rssLink, "https://open.firstory.me/rss/user"){
+			if tt.isExternalLink && gstr.HasPrefix(rssLink, "https://open.firstory.me/rss/user") {
 				t.Fatal("Parse internal RSS link failed")
 			}
 		})
