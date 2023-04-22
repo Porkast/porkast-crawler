@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"guoshao-fm-crawler/internal/service/celery/jobs"
 	"guoshao-fm-crawler/internal/service/network"
-	"time"
 
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
@@ -17,7 +16,7 @@ func ParseXiMaLaYaPodcast(url string) {
 		podcastUrl string
 		respStr    string
 	)
-	time.Sleep(time.Second * 3)
+
 	podcastUrl = url + ".xml"
 	g.Log().Line().Debug(ctx, "Start parse ximalaya podcast with url : ", podcastUrl)
 	respStr = network.TryGetRSSContent(ctx, podcastUrl)
