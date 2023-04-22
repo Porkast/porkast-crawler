@@ -32,7 +32,9 @@ var (
 func initConfig() {
 	if os.Getenv("env") == "dev" {
 		genv.Set("GF_GCFG_FILE", "config-dev.yaml")
-	}
+	} else {
+		genv.Set("GF_GCFG_FILE", "config.yaml")
+    }
 }
 
 func initComponent(ctx context.Context) {
