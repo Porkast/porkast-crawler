@@ -27,6 +27,7 @@ func InitES(ctx context.Context) {
 	username, _ = g.Cfg().Get(ctx, "elastic.username")
 	password, _ = g.Cfg().Get(ctx, "elastic.password")
 	url = host.String() + ":" + port.String()
+	g.Log().Line().Infof(ctx, "Ready to connect to elasticsearch with url %s", url)
 	var err error
 	gdElastic = &GSElastic{}
 	gdElastic.Client, err = elastic.NewClient(elastic.SetURL(url), elastic.SetSniff(false), elastic.SetHealthcheck(false), elastic.SetBasicAuth(username.String(), password.String()))
