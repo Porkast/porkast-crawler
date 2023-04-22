@@ -21,6 +21,25 @@ func getXimalayaEntryUrlList() (urlList []string) {
 		consts.XIMALAYA_CATEGORY_URL_FOREIGN_LANGUAGE,
 		consts.XIMALAYA_CATEGORY_URL_CHILDREN,
 		consts.XIMALAYA_CATEGORY_URL_BUSINESS,
+		consts.XIMALAYA_CATEGORY_URL_HISTORY,
+		consts.XIMALAYA_CATEGORY_URL_XIANGSHEN,
+		consts.XIMALAYA_CATEGORY_URL_GEREN_CHENGZHANG,
+		consts.XIMALAYA_CATEGORY_URL_RENWEN_GUOXUE,
+		consts.XIMALAYA_CATEGORY_URL_LIFE,
+		consts.XIMALAYA_CATEGORY_URL_HOT_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_HISTORY_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_EMOTION_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_FINACE_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_SELF_IMPROVMENT_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_HEALTH_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_LIFE_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_MOVIE_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_BUSINESS_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_ENGLISH_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_CHILDREN_GROWTH_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_TECH_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_EDU_EXAM_CHANNEL,
+		consts.XIMALAYA_CATEGORY_URL_SPORT_CHANNEL,
 	}
 
 	return
@@ -37,7 +56,12 @@ func StartXiMaLaYaJobs(ctx context.Context) {
 			randomSleepTime = getRandomStartTime()
 			g.Log().Line().Info(ctx, "start ximalaya jobs, sleep random time : ", randomSleepTime)
 			time.Sleep(randomSleepTime)
-			AssignXiMaLaYaEntryJob(ctx)
+			if !isJobStarted(ctx, consts.XIMALAYA_ENTRY_JOB) {
+				jobIsStarted(ctx, consts.XIMALAYA_ENTRY_JOB)
+				AssignXiMaLaYaEntryJob(ctx)
+			} else {
+				g.Log().Line().Info(ctx, "The SPREAKER FM entry jobs is started, sleep ", refreshTime, " hour")
+			}
 			time.Sleep(refreshTime)
 		}
 	}(ctx)
@@ -57,15 +81,10 @@ func AssignXiMaLaYaEntryJob(ctx context.Context) {
 			)
 			currentPage = i + 1
 			targetUrl = formatXimalayaUrl(url, currentPage)
-			if !isJobStarted(ctx, targetUrl) {
-				jobIsStarted(ctx, targetUrl)
-				g.Log().Line().Debug(ctx, "Assign ximalaya entry work with url : ", targetUrl)
-				_, err = celery.GetClient().Delay(consts.XIMALAYA_ENTRY_WORKER, targetUrl)
-				if err != nil {
-					g.Log().Line().Error(ctx, fmt.Sprintf("Assign XIMALAYA_ENTRY_WORKER with url %s failed : %s", url, err))
-				}
-			} else {
-				g.Log().Line().Info(ctx, "The ximalaya FM entry jobs is started")
+			g.Log().Line().Debug(ctx, "Assign ximalaya entry work with url : ", targetUrl)
+			_, err = celery.GetClient().Delay(consts.XIMALAYA_ENTRY_WORKER, targetUrl)
+			if err != nil {
+				g.Log().Line().Error(ctx, fmt.Sprintf("Assign XIMALAYA_ENTRY_WORKER with url %s failed : %s", url, err))
 			}
 		}
 	}
