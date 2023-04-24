@@ -12,6 +12,9 @@ const XIMALAYA_CATEGORY_URL = "https://www.ximalaya.com/revision/category/v2/alb
 // 热点
 const XIMALAYA_CATEGORY_URL_HOT = "https://www.ximalaya.com/revision/category/v2/albums?pageNum=%d&pageSize=56&sort=1&categoryId=1005"
 
+// 最近更新
+const XIMALAYA_CATEGORY_URL_LATEST = "https://www.ximalaya.com/revision/category/v2/albums?pageNum=%d&pageSize=56&sort=2"
+
 // 音乐
 const XIMALAYA_CATEGORY_URL_MUSIC = "https://www.ximalaya.com/revision/category/v2/albums?pageNum=%d&pageSize=56&sort=1&categoryId=2"
 
@@ -43,49 +46,52 @@ const XIMALAYA_CATEGORY_URL_RENWEN_GUOXUE = "https://www.ximalaya.com/revision/c
 const XIMALAYA_CATEGORY_URL_LIFE = "https://www.ximalaya.com/revision/category/v2/albums?pageNum=%d&pageSize=56&sort=1&categoryId=1006"
 
 // 热点
-const XIMALAYA_CATEGORY_URL_HOT_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=24"
+const XIMALAYA_CATEGORY_URL_HOT_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=24"
 
 // 历史Channel
-const XIMALAYA_CATEGORY_URL_HISTORY_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=16"
+const XIMALAYA_CATEGORY_URL_HISTORY_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=16"
 
 // 情感
-const XIMALAYA_CATEGORY_URL_EMOTION_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=20"
+const XIMALAYA_CATEGORY_URL_EMOTION_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=20"
 
 // 投资理财
-const XIMALAYA_CATEGORY_URL_FINACE_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=26"
+const XIMALAYA_CATEGORY_URL_FINACE_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=26"
 
 // 个人成长
-const XIMALAYA_CATEGORY_URL_SELF_IMPROVMENT_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=31"
+const XIMALAYA_CATEGORY_URL_SELF_IMPROVMENT_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=31"
 
 // 健康Channel
-const XIMALAYA_CATEGORY_URL_HEALTH_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=22"
+const XIMALAYA_CATEGORY_URL_HEALTH_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=22"
 
 // 生活Channel
-const XIMALAYA_CATEGORY_URL_LIFE_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=21"
+const XIMALAYA_CATEGORY_URL_LIFE_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=21"
 
 // 影视Channel
-const XIMALAYA_CATEGORY_URL_MOVIE_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=15"
+const XIMALAYA_CATEGORY_URL_MOVIE_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=15"
 
 // 商业Channel
-const XIMALAYA_CATEGORY_URL_BUSINESS_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=27"
+const XIMALAYA_CATEGORY_URL_BUSINESS_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=27"
 
 // 英语Channel
-const XIMALAYA_CATEGORY_URL_ENGLISH_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=29"
+const XIMALAYA_CATEGORY_URL_ENGLISH_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=29"
 
 // 少儿素养Channel
 const XIMALAYA_CATEGORY_URL_CHILDREN_GROWTH_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=12"
 
 // 科技Channel
-const XIMALAYA_CATEGORY_URL_TECH_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=28"
+const XIMALAYA_CATEGORY_URL_TECH_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=28"
 
 // 教育考试Channel
-const XIMALAYA_CATEGORY_URL_EDU_EXAM_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=32"
+const XIMALAYA_CATEGORY_URL_EDU_EXAM_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=32"
 
 // 体育Channel
-const XIMALAYA_CATEGORY_URL_SPORT_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=25"
+const XIMALAYA_CATEGORY_URL_SPORT_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=25"
 
 // 小语种Channel
-const XIMALAYA_CATEGORY_URL_SMALL_LANG_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=30"
+const XIMALAYA_CATEGORY_URL_SMALL_LANG_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=30"
 
 // 汽车Channel
-const XIMALAYA_CATEGORY_URL_CAR_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=1&pageSize=50&sort=1&metadata=&groupId=23"
+const XIMALAYA_CATEGORY_URL_CAR_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=1&metadata=&groupId=23"
+
+// 最近更新
+const XIMALAYA_CATEGORY_URL_LATEST_CHANNEL = "https://www.ximalaya.com/revision/metadata/v2/channel/albums?pageNum=%d&pageSize=50&sort=2&metadata="
