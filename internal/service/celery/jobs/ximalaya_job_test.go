@@ -16,6 +16,8 @@ func Test_getEntryUrlList(t *testing.T) {
 		t.Fatal("ximalaya entru url list is empty")
 	}
 
+    t.Log("total url list size : ", len(urlList))
+
 	for _, url := range urlList {
 		var (
 			targetUrl string
