@@ -1,0 +1,18 @@
+package worker
+
+import (
+	"guoshao-fm-crawler/internal/service/network"
+
+	"github.com/gogf/gf/v2/os/gctx"
+)
+
+func ChannelUpdateByFeedLink(feedLink string) {
+	var (
+		ctx     = gctx.New()
+		respStr string
+	)
+	respStr = network.TryGetRSSContent(ctx, feedLink)
+	if isStringRSSXml(respStr) {
+		storeFeed(ctx, respStr)
+	}
+}

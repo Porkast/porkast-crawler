@@ -46,6 +46,7 @@ func initCelery(ctx context.Context) {
 	celery.InitCeleryClient(ctx)
 	RegisterCeleryWorker()
 	celery.GetClient().StartWorker()
+	jobs.StartFeedUpdatJobs(ctx)
 	jobs.StartXiMaLaYaJobs(ctx)
 	jobs.StartLizhiJob(ctx)
 	jobs.StartFirstoryJob(ctx)
@@ -54,6 +55,8 @@ func initCelery(ctx context.Context) {
 }
 
 func RegisterCeleryWorker() {
+	// Channel Update Job
+	celery.GetClient().Register(consts.CHANNEL_UPDATE_BY_FEED_LINK, worker.ChannelUpdateByFeedLink)
 	// XIMALAYA
 	celery.GetClient().Register(consts.XIMALAYA_PODCAST_WORKER, worker.ParseXiMaLaYaPodcast)
 	celery.GetClient().Register(consts.XIMALAYA_ENTRY_WORKER, worker.ParseXiMaLaYaEntry)

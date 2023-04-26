@@ -42,3 +42,24 @@ func InsertFeedChannelIfNotExist(ctx context.Context, model entity.FeedChannel) 
 	}
 	return err
 }
+
+
+func GetAllFeedChannelCount(ctx context.Context) (count int, err error) {
+	count, err = FeedChannel.Ctx(ctx).Count()
+	if err != nil {
+		g.Log().Line().Error(ctx, "Get channel total count failed : ", err)
+	}
+
+	return
+}
+
+func GetFeedChannelList(ctx context.Context, offset, limit int) (channelModelList []entity.FeedChannel) {
+	var (
+		err    error
+	)
+	err = FeedChannel.Ctx(ctx).Offset(offset).Limit(limit).Scan(&channelModelList)
+	if err != nil {
+		g.Log().Line().Error(ctx, "Get feed channel list failed : ", err)
+	}
+	return
+}
