@@ -64,7 +64,7 @@ func storeFeed(ctx context.Context, respStr, feedLink string) {
 			feedItem = feedItemToModel(feedID, *item)
 			feedItemList = append(feedItemList, feedItem)
 		}
-		err = dao.InsertFeedChannelIfNotExist(ctx, feedChannelMode)
+		err = dao.InsertOrUpdateFeedChannel(ctx, feedChannelMode)
 		if err == nil {
 			elasticsearch.Client().InsertFeedChannel(ctx, feedChannelMode)
 		}
