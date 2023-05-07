@@ -13,6 +13,6 @@ func ChannelUpdateByFeedLink(feedLink string) {
 	)
 	respStr = network.TryGetRSSContent(ctx, feedLink)
 	if isStringRSSXml(respStr) {
-		storeFeed(ctx, respStr)
+		storeFeed(ctx, respStr, feedLink)
 	}
 }

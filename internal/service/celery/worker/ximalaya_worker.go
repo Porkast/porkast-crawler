@@ -22,7 +22,7 @@ func ParseXiMaLaYaPodcast(url string) {
 	respStr = network.TryGetRSSContent(ctx, podcastUrl)
 	if isStringRSSXml(respStr) {
 		//The ximalaya album is RSS
-		storeFeed(ctx, respStr)
+		storeFeed(ctx, respStr, podcastUrl)
 	}
 }
 

@@ -56,12 +56,13 @@ func GetApplePodcastItemRSS(itemUrl string) {
 		ctx        = gctx.New()
 		itemId     string
 		rssContent string
+		feedLink   string
 	)
 
 	itemId = parseApplePodcastItemId(ctx, itemUrl)
-	rssContent = getApplePodcastItemRSSByLookupAPI(ctx, itemId)
+	rssContent, feedLink = getApplePodcastItemRSSByLookupAPI(ctx, itemId)
 	if isStringRSSXml(rssContent) {
-		storeFeed(ctx, rssContent)
+		storeFeed(ctx, rssContent, feedLink)
 	}
 }
 
@@ -117,11 +118,10 @@ func parseApplePodcastItemId(ctx context.Context, itemUrl string) (itemId string
 	return
 }
 
-func getApplePodcastItemRSSByLookupAPI(ctx context.Context, itemId string) (rss string) {
+func getApplePodcastItemRSSByLookupAPI(ctx context.Context, itemId string) (rss, feedLink string) {
 	var (
 		apiUrl      string
 		respJsonStr string
-		rssLink     string
 		respJson    *gjson.Json
 	)
 
@@ -131,10 +131,10 @@ func getApplePodcastItemRSSByLookupAPI(ctx context.Context, itemId string) (rss 
 		g.Log().Line().Error(ctx, "get content from apple podcast itune lookup api failed with item id ", itemId)
 	}
 	respJson = gjson.New(respJsonStr)
-	rssLink = respJson.Get("results.0.feedUrl").String()
-	rss = network.GetContent(ctx, rssLink)
+	feedLink = respJson.Get("results.0.feedUrl").String()
+	rss = network.GetContent(ctx, feedLink)
 	if rss == "" {
-		g.Log().Line().Error(ctx, fmt.Sprintf("get rss content by apple podcast itune api with item id (%s) link (%s) failed", itemId, rssLink))
+		g.Log().Line().Error(ctx, fmt.Sprintf("get rss content by apple podcast itune api with item id (%s) link (%s) failed", itemId, feedLink))
 	}
 
 	return

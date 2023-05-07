@@ -36,7 +36,7 @@ func InsertFeedChannelIfNotExist(ctx context.Context, model entity.FeedChannel) 
 	result, _ = FeedChannel.Ctx(ctx).Where("id=?", model.Id).One()
 	if result.IsEmpty() {
 		g.Log().Line().Debugf(ctx, "Insert feed channel %s to DB", model.Title)
-		_, err = FeedChannel.Ctx(ctx).Insert(model)
+		_, err = FeedChannel.Ctx(ctx).Save(model)
 	} else {
 		return errors.New("The Feed Channel is exist")
 	}

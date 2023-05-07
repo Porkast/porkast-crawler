@@ -35,7 +35,7 @@ func isStringRSSXml(respStr string) bool {
 	return false
 }
 
-func storeFeed(ctx context.Context, respStr string) {
+func storeFeed(ctx context.Context, respStr, feedLink string) {
 	var (
 		feed *gofeed.Feed
 	)
@@ -54,6 +54,9 @@ func storeFeed(ctx context.Context, respStr string) {
 		)
 		feedID = strconv.FormatUint(ghash.RS64([]byte(feed.Link+feed.Title)), 32)
 		feedChannelMode = feedChannelToModel(feedID, *feed)
+        if feedChannelMode.FeedLink == "" {
+            feedChannelMode.FeedLink = feedLink
+        }
 		for _, item := range feed.Items {
 			var (
 				feedItem entity.FeedItem

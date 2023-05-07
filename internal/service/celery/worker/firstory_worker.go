@@ -66,7 +66,7 @@ func ParseFirstoryShowRSS(categoryId string) {
 	rssLink = getFirsotryShowRSSLink(ctx, respStr)
 	respStr = network.TryGetRSSContent(ctx, rssLink)
 	if isStringRSSXml(respStr) {
-		storeFeed(ctx, respStr)
+		storeFeed(ctx, respStr, rssLink)
 	}
 
 }

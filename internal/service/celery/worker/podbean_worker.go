@@ -65,7 +65,7 @@ func ParsePodbeanShowRSS(rssLink string) {
 	}
 
 	if isStringRSSXml(rssResp) {
-		storeFeed(ctx, rssResp)
+		storeFeed(ctx, rssResp, rssLink)
 	}
 
 }
