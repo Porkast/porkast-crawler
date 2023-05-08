@@ -7,7 +7,7 @@ logger:
   path: "./logs/"
   file: "{Y-m-d}.log"
   stdout: true
-  level: "all"
+  level: "info"
   rotateSize: "100M"
   rotateBackupLimit: 10
   rotateBackupExpire: "10d"
@@ -16,11 +16,11 @@ logger:
 
 database:
   default:
-    host: "127.0.0.1"
+    host: "rm-uf6zz7tf01t4n01ilio.rwlb.rds.aliyuncs.com"
     port: "3306"
     user: "guoshaofm"
     name: "guoshaofmdb"
-    pass: "qazxsw"
+    pass: "1qaz!QAZ"
     type: "mysql"
     weight: "100"
     createdAt: "true"
@@ -32,7 +32,7 @@ database:
 
 redis:
   default:
-    address: 127.0.0.1:6379
+    address: 47.242.232.137:6379
     db: 1
     pass: 123456
 
@@ -41,7 +41,7 @@ celery:
     count: 3
 
 elastic:
-  host: "http://127.0.0.1"
+  host: "http://47.242.232.137"
   port: "9200"
   username: "elastic"
   password: "qazxsw"
