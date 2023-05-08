@@ -5,6 +5,7 @@ import (
 
 	"github.com/gogf/gf/v2/container/gvar"
 	"github.com/gogf/gf/v2/database/gredis"
+	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcfg"
 )
@@ -34,7 +35,8 @@ func initRedisConfig(ctx context.Context) *gredis.Config {
 	redisConfig.Address = redisAddr.String()
 	redisConfig.Db = db.Int()
 	// redisConfig.Pass = pass.String()
-	g.Log().Warning(ctx, "The redis is not set password, the config password is ", pass)
+	g.Log().Line().Warning(ctx, "The redis is not set password, the config password is ", pass)
+	g.Log().Line().Info(ctx, "The redis config :\n", gjson.MustEncodeString(redisConfig))
 
 	return redisConfig
 }
