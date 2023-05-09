@@ -39,7 +39,7 @@ func ParseApplePodcastCategoryItems(categoryUrl string) {
 		respStr     string
 	)
 
-	g.Log().Line().Debug(ctx, "Start parse apple podcast category item page")
+	g.Log().Line().Debug(ctx, "Start parse apple podcast category item page with url ", categoryUrl)
 	respStr = network.GetContent(ctx, categoryUrl)
 	if respStr == "" {
 		g.Log().Line().Error(ctx, "Get apple podcast category item failed")
@@ -59,6 +59,7 @@ func GetApplePodcastItemRSS(itemUrl string) {
 		feedLink   string
 	)
 
+	g.Log().Line().Debug(ctx, "Get apple podcast item rss with url : ", itemUrl)
 	itemId = parseApplePodcastItemId(ctx, itemUrl)
 	rssContent, feedLink = getApplePodcastItemRSSByLookupAPI(ctx, itemId)
 	if isStringRSSXml(rssContent) {
