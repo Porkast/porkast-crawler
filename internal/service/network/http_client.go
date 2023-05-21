@@ -59,7 +59,9 @@ func TryGetRSSContent(ctx context.Context, link string) (resp string) {
 			resp.Close()
 		}
 	}(r)
-	if r == nil || r.StatusCode == 404 {
+	if r == nil {
+		return
+	} else if r.StatusCode == 404 {
 		return
 	} else if err != nil {
 		g.Log().Line().Error(ctx, err)
