@@ -62,6 +62,9 @@ func storeFeed(ctx context.Context, respStr, feedLink string) {
 				feedItem entity.FeedItem
 			)
 			feedItem = feedItemToModel(feedID, *item)
+            if feedItem.Author == "" {
+                feedItem.Author = feedChannelMode.Author
+            }
 			feedItemList = append(feedItemList, feedItem)
 		}
 		err = dao.InsertOrUpdateFeedChannel(ctx, feedChannelMode)
