@@ -54,17 +54,17 @@ func storeFeed(ctx context.Context, respStr, feedLink string) {
 		)
 		feedID = strconv.FormatUint(ghash.RS64([]byte(feed.Link+feed.Title)), 32)
 		feedChannelMode = feedChannelToModel(feedID, *feed)
-        if feedChannelMode.FeedLink == "" {
-            feedChannelMode.FeedLink = feedLink
-        }
+		if feedChannelMode.FeedLink == "" {
+			feedChannelMode.FeedLink = feedLink
+		}
 		for _, item := range feed.Items {
 			var (
 				feedItem entity.FeedItem
 			)
 			feedItem = feedItemToModel(feedID, *item)
-            if feedItem.Author == "" {
-                feedItem.Author = feedChannelMode.Author
-            }
+			if feedItem.Author == "" {
+				feedItem.Author = feedChannelMode.Author
+			}
 			feedItemList = append(feedItemList, feedItem)
 		}
 		err = dao.InsertOrUpdateFeedChannel(ctx, feedChannelMode)
@@ -102,16 +102,19 @@ func feedChannelToModel(uid string, feed gofeed.Feed) (model entity.FeedChannel)
 		Categories:  gstr.Join(feed.Categories, ","),
 	}
 
-	authorList = make([]string, 0)
-	for _, authorItem := range feed.Authors {
-		var (
-			author string
-		)
-		author = authorItem.Name + "|" + authorItem.Email
-		authorList = append(authorList, author)
+	if len(feed.Authors) > 1 {
+		for _, authorItem := range feed.Authors {
+			var (
+				author string
+			)
+			author = authorItem.Name
+			authorList = append(authorList, author)
+		}
+		model.Author = gstr.Join(authorList, ",")
+	} else if len(feed.Authors) == 1 {
+		model.Author = feed.Authors[0].Name
 	}
 
-	model.Author = gstr.Join(authorList, ",")
 	if feed.ITunesExt != nil && feed.ITunesExt.Owner != nil {
 		model.OwnerName = feed.ITunesExt.Owner.Name
 		model.OwnerEmail = feed.ITunesExt.Owner.Email
@@ -155,6 +158,7 @@ func feedItemToModel(channelId string, item gofeed.Item) (model entity.FeedItem)
 			authors []string
 		)
 		for _, author := range item.Authors {
+			author.Name = formatFeedAuthor(author.Name)
 			authors = append(authors, author.Name)
 		}
 		if len(authors) == 0 {
@@ -168,6 +172,17 @@ func feedItemToModel(channelId string, item gofeed.Item) (model entity.FeedItem)
 		model.EnclosureUrl = item.Enclosures[0].URL
 		model.EnclosureType = item.Enclosures[0].Type
 		model.EnclosureLength = item.Enclosures[0].Length
+	}
+
+	return
+}
+
+func formatFeedAuthor(author string) (formatAuthor string) {
+
+	if author != "" && gstr.HasSuffix(author, "|") {
+		formatAuthor = author[:len(author)-1]
+	} else {
+		formatAuthor = author
 	}
 
 	return
