@@ -18,7 +18,7 @@ func Test_getXimalayaAlbumUrlList(t *testing.T) {
 		t.Fatal("Parse ximalaya category response as json failed : ", err)
 	}
 
-	albumUrlList = getXimalayaAlbumUrlList(*sampleJson)
+	albumUrlList = getXimalayaAlbumUrlList(sampleJson)
 	if len(albumUrlList) == 0 {
 		t.Fatal("Parse ximalaya album list is empty")
 	}

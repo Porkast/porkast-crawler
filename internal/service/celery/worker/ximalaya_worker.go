@@ -41,13 +41,13 @@ func ParseXiMaLaYaEntry(url string) {
 		g.Log().Line().Error(ctx, fmt.Sprintf("Parse ximalaya albums response json failed.\nUrl is %s\nResponse String is %s", url, respStr))
 	}
 
-	albumUrlList = getXimalayaAlbumUrlList(*respJson)
+	albumUrlList = getXimalayaAlbumUrlList(respJson)
 	for _, albumUrl := range albumUrlList {
 		jobs.AssignXimalayaPodcastJob(ctx, albumUrl)
 	}
 }
 
-func getXimalayaAlbumUrlList(data gjson.Json) (albumUrlList []string) {
+func getXimalayaAlbumUrlList(data *gjson.Json) (albumUrlList []string) {
 	var (
 		ximalayaBaseUrl = "https://www.ximalaya.com"
 		albumJsons      []*gjson.Json
