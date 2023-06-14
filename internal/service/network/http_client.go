@@ -59,12 +59,15 @@ func TryGetRSSContent(ctx context.Context, link string) (resp string) {
 			resp.Close()
 		}
 	}(r)
-	if r == nil {
-		return
-	} else if r.StatusCode == 404 {
-		return
-	} else if err != nil {
+
+	if err != nil {
 		g.Log().Line().Error(ctx, err)
+		return
+	} else if r == nil {
+		g.Log().Line().Errorf(ctx, "The response with url %s is empty", link)
+		return
+	} else if r != nil && r.StatusCode == 404 {
+		g.Log().Line().Errorf(ctx, "The response with url %s is 404", link)
 		return
 	}
 
