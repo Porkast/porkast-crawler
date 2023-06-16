@@ -14,7 +14,7 @@ func StartPodbeanJob(ctx context.Context) {
 	go func(ctx context.Context) {
 
 		var (
-			refreshTime     = time.Hour * 1
+			refreshTime     = time.Hour * 6
 			randomSleepTime time.Duration
 		)
 
