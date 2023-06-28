@@ -24,4 +24,5 @@ type FeedItemESData struct {
 	ChannelImageUrl string      `json:"channelImageUrl" ` //
 	ChannelTitle    string      `json:"channelTitle"    ` //
 	FeedLink        string      `json:"feedLink"        ` //
+	Language        string      `json:"language"        ` //
 }

@@ -79,6 +79,7 @@ func storeFeed(ctx context.Context, respStr, feedLink string) {
 				esFeedItem.ChannelImageUrl = feedChannelMode.ImageUrl
 				esFeedItem.ChannelTitle = feedChannelMode.Title
 				esFeedItem.FeedLink = feedChannelMode.FeedLink
+				esFeedItem.Language = feedChannelMode.Language
 				elasticsearch.Client().InsertFeedItem(ctx, esFeedItem)
 			}
 		}
