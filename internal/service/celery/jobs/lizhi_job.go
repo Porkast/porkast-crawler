@@ -8,29 +8,26 @@ import (
 	"time"
 
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gcron"
 )
 
 func StartLizhiJob(ctx context.Context) {
-	go func(ctx context.Context) {
-
+	_, err := gcron.Add(ctx, consts.PODCAST_WEB_CRAWLER_CRON_PATTERN, func(ctx context.Context) {
 		var (
-			refreshTime     = time.Hour * 6
 			randomSleepTime time.Duration
 		)
-
-		for {
-			randomSleepTime = getRandomStartTime()
-			g.Log().Line().Info(ctx, "start lizhi FM entry jobs, sleep random time : ", randomSleepTime)
-			time.Sleep(randomSleepTime)
-			if !isJobStarted(ctx, consts.LIZHI_ENTRY_WORKER) {
-				jobIsStarted(ctx, consts.LIZHI_ENTRY_WORKER)
-				AssignLizhiEntryJob(ctx)
-			} else {
-				g.Log().Line().Info(ctx, "The lizhi FM entry jobs is started, sleep ", refreshTime, " hour")
-			}
-			time.Sleep(refreshTime)
+		randomSleepTime = getRandomStartTime()
+		g.Log().Line().Info(ctx, "start lizhi FM entry jobs, sleep random time : ", randomSleepTime)
+		time.Sleep(randomSleepTime)
+		if !isJobStarted(ctx, consts.LIZHI_ENTRY_WORKER) {
+			jobIsStarted(ctx, consts.LIZHI_ENTRY_WORKER)
+			AssignLizhiEntryJob(ctx)
 		}
-	}(ctx)
+	})
+
+	if err != nil {
+		g.Log().Line().Error(ctx, "Add LIZHI FM entry jobs cron job failed : ", err)
+	}
 }
 
 func AssignLizhiEntryJob(ctx context.Context) {

@@ -10,28 +10,27 @@ import (
 	"time"
 
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gcron"
 )
 
 func StartFeedUpdatJobs(ctx context.Context) {
-	go func(ctx context.Context) {
+
+	_, err := gcron.Add(ctx, consts.FEED_UPDATE_CRON_PATTERN, func(ctx context.Context) {
 		var (
-			refreshTime     = time.Hour * 3
 			randomSleepTime time.Duration
 		)
-
-		for {
-			randomSleepTime = getRandomStartTime()
-			g.Log().Line().Info(ctx, "start channel update jobs, sleep random time : ", randomSleepTime)
-			time.Sleep(randomSleepTime)
-			if !isJobStarted(ctx, consts.CHANNEL_UPDATE_ENTRY_JOB) {
-				jobIsStarted(ctx, consts.CHANNEL_UPDATE_ENTRY_JOB)
-				AssignChannelUpdateEntryJob(ctx)
-			} else {
-				g.Log().Line().Info(ctx, "The channel update entry jobs is started, sleep ", refreshTime, " hour")
-			}
-			time.Sleep(refreshTime)
+		randomSleepTime = getRandomStartTime()
+		g.Log().Line().Info(ctx, "start channel update jobs, sleep random time : ", randomSleepTime)
+		time.Sleep(randomSleepTime)
+		if !isJobStarted(ctx, consts.CHANNEL_UPDATE_ENTRY_JOB) {
+			jobIsStarted(ctx, consts.CHANNEL_UPDATE_ENTRY_JOB)
+			AssignChannelUpdateEntryJob(ctx)
 		}
-	}(ctx)
+	})
+
+	if err != nil {
+		g.Log().Line().Error(ctx, "Add feed updated cron job failed : ", err)
+	}
 }
 
 func AssignChannelUpdateEntryJob(ctx context.Context) {

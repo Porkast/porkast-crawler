@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gcron"
 )
 
 func getXimalayaEntryUrlList() (urlList []string) {
@@ -49,25 +50,22 @@ func getXimalayaEntryUrlList() (urlList []string) {
 }
 
 func StartXiMaLaYaJobs(ctx context.Context) {
-	go func(ctx context.Context) {
+	_, err := gcron.Add(ctx, consts.PODCAST_WEB_CRAWLER_CRON_PATTERN, func(ctx context.Context) {
 		var (
-			refreshTime     = time.Hour * 6
 			randomSleepTime time.Duration
 		)
-
-		for {
-			randomSleepTime = getRandomStartTime()
-			g.Log().Line().Info(ctx, "start ximalaya jobs, sleep random time : ", randomSleepTime)
-			time.Sleep(randomSleepTime)
-			if !isJobStarted(ctx, consts.XIMALAYA_ENTRY_JOB) {
-				jobIsStarted(ctx, consts.XIMALAYA_ENTRY_JOB)
-				AssignXiMaLaYaEntryJob(ctx)
-			} else {
-				g.Log().Line().Info(ctx, "The SPREAKER FM entry jobs is started, sleep ", refreshTime, " hour")
-			}
-			time.Sleep(refreshTime)
+		randomSleepTime = getRandomStartTime()
+		g.Log().Line().Info(ctx, "start ximalaya jobs, sleep random time : ", randomSleepTime)
+		time.Sleep(randomSleepTime)
+		if !isJobStarted(ctx, consts.XIMALAYA_ENTRY_JOB) {
+			jobIsStarted(ctx, consts.XIMALAYA_ENTRY_JOB)
+			AssignXiMaLaYaEntryJob(ctx)
 		}
-	}(ctx)
+	})
+
+	if err != nil {
+		g.Log().Line().Error(ctx, "Add xiamalaya FM entry jobs cron job failed : ", err)
+	}
 }
 
 func AssignXiMaLaYaEntryJob(ctx context.Context) {

@@ -8,28 +8,26 @@ import (
 	"time"
 
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gcron"
 )
 
 func StartFirstoryJob(ctx context.Context) {
-	go func(ctx context.Context) {
+	_, err := gcron.Add(ctx, consts.PODCAST_WEB_CRAWLER_CRON_PATTERN, func(ctx context.Context) {
 		var (
-			refreshTime     = time.Hour * 6
 			randomSleepTime time.Duration
 		)
-
-		for {
-			randomSleepTime = getRandomStartTime()
-			g.Log().Line().Info(ctx, "start FIRSTORY FM entry jobs, sleep random time : ", randomSleepTime)
-			time.Sleep(randomSleepTime)
-			if !isJobStarted(ctx, consts.FIRSTORY_ENTRY_JOB) {
-				jobIsStarted(ctx, consts.FIRSTORY_ENTRY_JOB)
-				AssignFirstoryEntryJob(ctx)
-			} else {
-				g.Log().Line().Info(ctx, "The FIRSTORY FM entry jobs is started, sleep ", refreshTime, " hour")
-			}
-			time.Sleep(refreshTime)
+		randomSleepTime = getRandomStartTime()
+		g.Log().Line().Info(ctx, "start FIRSTORY FM entry jobs, sleep random time : ", randomSleepTime)
+		time.Sleep(randomSleepTime)
+		if !isJobStarted(ctx, consts.FIRSTORY_ENTRY_JOB) {
+			jobIsStarted(ctx, consts.FIRSTORY_ENTRY_JOB)
+			AssignFirstoryEntryJob(ctx)
 		}
-	}(ctx)
+	})
+
+	if err != nil {
+		g.Log().Line().Error(ctx, "Add FIRSTORY FM entry jobs cron job failed : ", err)
+	}
 }
 
 func AssignFirstoryEntryJob(ctx context.Context) {
