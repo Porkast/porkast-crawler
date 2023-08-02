@@ -10,7 +10,12 @@ func TestChannelUpdateByFeedLink(t *testing.T) {
 		name string
 		args args
 	}{
-
+        {
+        	name: "update feed by feed link",
+        	args: args{
+        		feedLink: "https://feed.xyzfm.space/byhkljlbep9j",
+        	},
+        },
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
