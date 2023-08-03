@@ -4,7 +4,7 @@
 #   swaggerPath: "/swagger"
 
 logger:
-  path: "./logs/"
+  # path: "./logs/"
   file: "{Y-m-d}.log"
   stdout: true
   level: "all"
