@@ -12,7 +12,7 @@ func ChannelUpdateByFeedLink(feedLink string) {
 		ctx     = gctx.New()
 		respStr string
 	)
-	g.Log().Line().Infof(ctx, "Start update feed by link %s", feedLink)
+
 	respStr = network.TryGetRSSContent(ctx, feedLink)
 	if isStringRSSXml(respStr) {
 		storeFeed(ctx, respStr, feedLink)
