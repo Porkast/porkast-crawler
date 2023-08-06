@@ -115,7 +115,7 @@ func (c *GSElastic) InsertFeedItemList(ctx context.Context, feedChannel entity.F
 	resp, err := bulkRequest.Do(ctx)
 	if err != nil || resp.Errors {
 		respStr := gjson.New(resp)
-		g.Log().Line().Errorf(ctx, "bulk index request failed\nError message : %s \nResponse : %s", err, respStr)
+		g.Log().Line().Errorf(ctx, "bulk index request failed\nError message : %s \nResponse : %s", err, respStr.MustToIniString())
 	}
 }
 
