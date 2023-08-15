@@ -52,7 +52,7 @@ func storeFeed(ctx context.Context, respStr, feedLink string) {
 			feedItemList    []entity.FeedItem
 			feedID          string
 		)
-		feedID = strconv.FormatUint(ghash.RS64([]byte(feed.Link+feed.Title)), 32)
+		feedID = strconv.FormatUint(ghash.RS64([]byte(feed.FeedLink+feed.Title)), 32)
 		feedChannelMode = feedChannelToModel(feedID, *feed)
 		if feedChannelMode.FeedLink == "" {
 			feedChannelMode.FeedLink = feedLink
