@@ -88,7 +88,7 @@ func ParseSpreakerShowRSS(url string) {
 	}
 
 	if isStringRSSXml(rssResp) {
-		storeFeed(ctx, rssResp, rssLink)
+		storeFeed(ctx, rssResp, rssLink, "ParseSpreakerShowRSS")
 	}
 
 }

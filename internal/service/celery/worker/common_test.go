@@ -1,11 +1,14 @@
 package worker
 
 import (
+	"context"
 	"guoshao-fm-crawler/internal/model/entity"
+	"guoshao-fm-crawler/internal/service/cache"
 	"strconv"
 	"testing"
 
 	"github.com/gogf/gf/v2/encoding/ghash"
+	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/mmcdole/gofeed"
 )
@@ -116,5 +119,32 @@ func Test_feedItemToModel(t *testing.T) {
 
 	if model.Link != "https://www.ximalaya.com//1716986/sound/618172108" {
 		t.Fatal("The item Link is not corret")
+	}
+}
+
+func Test_setChannelLastUpdateRecord(t *testing.T) {
+	type args struct {
+		ctx       context.Context
+		channelId string
+		funName   string
+	}
+	tests := []struct {
+		name string
+		args args
+	}{
+		{
+			name: "set channel last update time",
+			args: args{
+				ctx:       gctx.New(),
+				channelId: "10snekvib3e4i",
+				funName:   "Test_setChannelLastUpdateRecord",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			cache.InitCache(tt.args.ctx)
+			setChannelLastUpdateRecord(tt.args.ctx, tt.args.channelId, tt.args.funName)
+		})
 	}
 }

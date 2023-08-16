@@ -3,7 +3,9 @@ package worker
 import (
 	"context"
 	"fmt"
+	"guoshao-fm-crawler/internal/consts"
 	"guoshao-fm-crawler/internal/model/entity"
+	"guoshao-fm-crawler/internal/service/cache"
 	"guoshao-fm-crawler/internal/service/elasticsearch"
 	"guoshao-fm-crawler/internal/service/internal/dao"
 	"guoshao-fm-crawler/utility"
@@ -35,7 +37,7 @@ func isStringRSSXml(respStr string) bool {
 	return false
 }
 
-func storeFeed(ctx context.Context, respStr, feedLink string) {
+func storeFeed(ctx context.Context, respStr, feedLink, funName string) {
 	var (
 		feed *gofeed.Feed
 	)
@@ -81,9 +83,18 @@ func storeFeed(ctx context.Context, respStr, feedLink string) {
 				esFeedItem.FeedLink = feedChannelMode.FeedLink
 				esFeedItem.Language = feedChannelMode.Language
 				elasticsearch.Client().InsertFeedItem(ctx, esFeedItem)
+				setChannelLastUpdateRecord(ctx, feedID, funName)
 			}
 		}
 	}
+}
+
+func setChannelLastUpdateRecord(ctx context.Context, channelId, funName string) {
+	valueMap := g.Map{
+		"LastUpdate": gtime.Datetime(),
+		"funName":    funName,
+	}
+	cache.DoHSet(ctx, consts.LAST_UPDATE_TIME, channelId, valueMap)
 }
 
 func feedChannelToModel(uid string, feed gofeed.Feed) (model entity.FeedChannel) {

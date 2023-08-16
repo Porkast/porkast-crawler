@@ -11,11 +11,11 @@ import (
 )
 
 var defaultCache *gcache.Cache
+var redisClient *gredis.Redis
 
 func InitCache(ctx context.Context) {
 	var (
-		redisClient *gredis.Redis
-		err         error
+		err error
 	)
 	defaultCache = gcache.New()
 	redisClient = initRedisClient(ctx)
@@ -35,4 +35,13 @@ func SetCache(ctx context.Context, key, value string, expireSecond int) error {
 
 func GetCache(ctx context.Context, key string) (*gvar.Var, error) {
 	return defaultCache.Get(ctx, key)
+}
+
+func DoHSet(ctx context.Context, key, mapKey string, mapValue g.Map) {
+	redisClient.MustDo(ctx, "HSET", key, mapKey, mapValue)
+}
+
+func GetHSet(ctx context.Context, key, mapKey string) (value *gvar.Var) {
+	value = redisClient.MustDo(ctx, "HGET", key, mapKey)
+	return
 }

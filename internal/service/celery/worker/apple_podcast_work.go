@@ -63,7 +63,7 @@ func GetApplePodcastItemRSS(itemUrl string) {
 	itemId = parseApplePodcastItemId(ctx, itemUrl)
 	rssContent, feedLink = getApplePodcastItemRSSByLookupAPI(ctx, itemId)
 	if isStringRSSXml(rssContent) {
-		storeFeed(ctx, rssContent, feedLink)
+		storeFeed(ctx, rssContent, feedLink, "GetApplePodcastItemRSS")
 	}
 }
 

@@ -15,7 +15,7 @@ func ChannelUpdateByFeedLink(feedLink string) {
 
 	respStr = network.TryGetRSSContent(ctx, feedLink)
 	if isStringRSSXml(respStr) {
-		storeFeed(ctx, respStr, feedLink)
+		storeFeed(ctx, respStr, feedLink, "ChannelUpdateByFeedLink")
 	} else {
 		g.Log().Line().Errorf(ctx, "The response by feed link %s is not RSS XML", feedLink)
 	}
