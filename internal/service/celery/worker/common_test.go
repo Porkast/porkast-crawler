@@ -3,10 +3,10 @@ package worker
 import (
 	"context"
 	"guoshao-fm-crawler/internal/model/entity"
-	"guoshao-fm-crawler/internal/service/cache"
 	"strconv"
 	"testing"
 
+	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 	"github.com/gogf/gf/v2/encoding/ghash"
 	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/os/gfile"
@@ -143,7 +143,6 @@ func Test_setChannelLastUpdateRecord(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			cache.InitCache(tt.args.ctx)
 			setChannelLastUpdateRecord(tt.args.ctx, tt.args.channelId, tt.args.funName)
 		})
 	}

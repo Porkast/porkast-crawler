@@ -3,9 +3,7 @@ package worker
 import (
 	"context"
 	"fmt"
-	"guoshao-fm-crawler/internal/consts"
 	"guoshao-fm-crawler/internal/model/entity"
-	"guoshao-fm-crawler/internal/service/cache"
 	"guoshao-fm-crawler/internal/service/elasticsearch"
 	"guoshao-fm-crawler/internal/service/internal/dao"
 	"guoshao-fm-crawler/utility"
@@ -90,11 +88,14 @@ func storeFeed(ctx context.Context, respStr, feedLink, funName string) {
 }
 
 func setChannelLastUpdateRecord(ctx context.Context, channelId, funName string) {
-	valueMap := g.Map{
-		"LastUpdate": gtime.Datetime(),
-		"funName":    funName,
+
+	channelUpdateRecordEntity := entity.FeedChannelUpdateRecord{
+		ChannelId:  channelId,
+		FuncName:   funName,
+		UpdateTime: gtime.Now(),
 	}
-	cache.DoHSet(ctx, consts.LAST_UPDATE_TIME, channelId, valueMap)
+
+	dao.FeedChannelUpdateRecord.Ctx(ctx).Save(channelUpdateRecordEntity)
 }
 
 func feedChannelToModel(uid string, feed gofeed.Feed) (model entity.FeedChannel) {
@@ -141,7 +142,7 @@ func feedChannelToModel(uid string, feed gofeed.Feed) (model entity.FeedChannel)
 
 func feedItemToModel(channelId string, item gofeed.Item) (model entity.FeedItem) {
 
-	var itemID = strconv.FormatUint(ghash.RS64([]byte(item.Link+item.Title)), 32)
+	var itemID = strconv.FormatUint(ghash.RS64([]byte(channelId+item.Title)), 32)
 
 	if item.ITunesExt == nil {
 		return
