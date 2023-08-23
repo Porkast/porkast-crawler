@@ -26,7 +26,13 @@ var (
 // Fill with you ideas below.
 func InsertOrUpdateFeedChannelUpdateRecord(ctx context.Context, data entity.FeedChannelUpdateRecord) (err error) {
 
+	var queryEntity entity.FeedChannelUpdateRecord
+	FeedChannelUpdateRecord.Ctx(ctx).Where("channel_id=?", data.ChannelId).Scan(&queryEntity)
+	if queryEntity.ChannelId == "" {
+        _, err = FeedChannelUpdateRecord.Ctx(ctx).Save(data)
+	} else {
+        _, err = FeedChannelUpdateRecord.Ctx(ctx).Update(data)
+	}
 
-
-    return
+	return
 }
