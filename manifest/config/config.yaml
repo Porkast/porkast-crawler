@@ -34,7 +34,7 @@ redis:
   default:
     address: 127.0.0.1:6379
     db: 1
-    pass: 123456
+    pass: 1qaz!QAZ
 
 celery:
   worker:

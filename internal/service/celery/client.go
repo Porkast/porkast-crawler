@@ -20,15 +20,17 @@ func InitCeleryClient(ctx context.Context) {
 		err         error
 		redisPool   *redis.Pool
 		redisAddr   *gvar.Var
+		redisPass   *gvar.Var
 		workerCount *gvar.Var
 	)
 	g.Log().Line().Info(ctx, "Start init gocelery client")
 	redisAddr, _ = g.Cfg().Get(ctx, "redis.default.address")
+	redisPass, _ = g.Cfg().Get(ctx, "redis.default.pass")
 	workerCount, _ = g.Cfg().Get(ctx, "celery.worker.count")
 
 	redisPool = &redis.Pool{
 		Dial: func() (redis.Conn, error) {
-			c, err := redis.DialURL("redis://" + redisAddr.String())
+			c, err := redis.DialURL("redis://" + ":" + redisPass.String() + "@" + redisAddr.String())
 			if err != nil {
 				return nil, err
 			}
