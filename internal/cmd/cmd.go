@@ -12,6 +12,7 @@ import (
 
 	"github.com/gogf/gf/v2/os/gcmd"
 	"github.com/gogf/gf/v2/os/genv"
+	"github.com/gogf/gf/v2/os/gtime"
 )
 
 var (
@@ -36,7 +37,8 @@ func initConfig() {
 		genv.Set("GF_GCFG_FILE", "config.prod.yaml")
 	} else {
 		genv.Set("GF_GCFG_FILE", "config.yaml")
-    }
+	}
+	gtime.SetTimeZone("Asia/Shanghai")
 }
 
 func initComponent(ctx context.Context) {
