@@ -38,7 +38,7 @@ redis:
 
 celery:
   worker:
-    count: 6
+    count: 20
 
 elastic:
   host: "http://47.242.232.137"
