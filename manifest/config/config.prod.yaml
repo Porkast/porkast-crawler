@@ -8,7 +8,7 @@ logger:
   file: "{Y-m-d}.log"
   stdout: true
   level: "info"
-  rotateSize: "100M"
+  rotateSize: "10M"
   rotateBackupLimit: 10
   rotateBackupExpire: "10d"
   rotateBackupCompress: 9
