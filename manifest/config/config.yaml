@@ -20,7 +20,7 @@ database:
     port: "3306"
     user: "guoshaofm"
     name: "guoshaofmdb"
-    pass: "qazxsw"
+    pass: "1qaz!QAZ"
     type: "mysql"
     weight: "100"
     createdAt: "true"

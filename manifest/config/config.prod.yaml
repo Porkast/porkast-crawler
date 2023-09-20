@@ -16,7 +16,7 @@ logger:
 
 database:
   default:
-    host: "rm-uf6zz7tf01t4n01ilio.rwlb.rds.aliyuncs.com"
+    host: "47.243.182.236"
     port: "3306"
     user: "guoshaofm"
     name: "guoshaofmdb"
@@ -32,7 +32,7 @@ database:
 
 redis:
   default:
-    address: 47.242.232.137:6379
+    address: 47.243.182.236:6379
     db: 1
     pass: 1qaz!QAZ
 
@@ -41,7 +41,7 @@ celery:
     count: 10
 
 elastic:
-  host: "http://47.242.232.137"
+  host: "http://47.243.182.236"
   port: "9200"
   username: "elastic"
   password: "qazxsw"
