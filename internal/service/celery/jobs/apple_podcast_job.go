@@ -36,7 +36,7 @@ func AssignApplePodcastEntryJob(ctx context.Context) {
 		err error
 	)
 
-	_, err = celery.GetClient().Delay(consts.APPLE_PODCAST_ENTRY_WORK, consts.APPLE_PODCAST_ENTRY_URL)
+	_, err = celery.GetClient().Delay(consts.APPLE_PODCAST_ENTRY_WORK, consts.APPLE_PODCAST_CN_ENTRY_URL)
 	if err != nil {
 		g.Log().Line().Error(ctx, fmt.Sprintf("Assign APPLE_PODCAST_ENTRY_WORK failed : %s", err))
 	}
