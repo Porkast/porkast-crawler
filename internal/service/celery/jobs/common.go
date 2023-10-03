@@ -2,7 +2,7 @@ package jobs
 
 import (
 	"context"
-	"guoshao-fm-crawler/internal/service/cache"
+	"porkast-crawler/internal/service/cache"
 	"time"
 
 	"github.com/gogf/gf/v2/container/gvar"

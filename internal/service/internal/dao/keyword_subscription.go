@@ -5,7 +5,7 @@
 package dao
 
 import (
-	"guoshao-fm-crawler/internal/service/internal/dao/internal"
+	"porkast-crawler/internal/service/internal/dao/internal"
 )
 
 // keywordSubscriptionDao is the data access object for table keyword_subscription.

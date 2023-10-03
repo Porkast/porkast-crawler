@@ -3,10 +3,10 @@ package jobs
 import (
 	"context"
 	"fmt"
-	"guoshao-fm-crawler/internal/consts"
-	"guoshao-fm-crawler/internal/model/entity"
-	"guoshao-fm-crawler/internal/service/celery"
-	"guoshao-fm-crawler/internal/service/internal/dao"
+	"porkast-crawler/internal/consts"
+	"porkast-crawler/internal/model/entity"
+	"porkast-crawler/internal/service/celery"
+	"porkast-crawler/internal/service/internal/dao"
 	"time"
 
 	"github.com/gogf/gf/v2/frame/g"

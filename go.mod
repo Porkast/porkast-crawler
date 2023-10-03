@@ -1,4 +1,4 @@
-module guoshao-fm-crawler
+module porkast-crawler
 
 go 1.15
 

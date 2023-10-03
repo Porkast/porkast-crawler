@@ -5,7 +5,7 @@
 package dao
 
 import (
-	"guoshao-fm-crawler/internal/service/internal/dao/internal"
+	"porkast-crawler/internal/service/internal/dao/internal"
 )
 
 // dailyFeedItemRecordDao is the data access object for table daily_feed_item_record.

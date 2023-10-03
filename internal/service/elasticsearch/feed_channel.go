@@ -2,7 +2,7 @@ package elasticsearch
 
 import (
 	"context"
-	"guoshao-fm-crawler/internal/model/entity"
+	"porkast-crawler/internal/model/entity"
 
 	"github.com/anaskhan96/soup"
 	"github.com/gogf/gf/v2/encoding/gjson"

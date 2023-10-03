@@ -3,10 +3,10 @@ package worker
 import (
 	"context"
 	"fmt"
-	"guoshao-fm-crawler/internal/model/entity"
-	"guoshao-fm-crawler/internal/service/elasticsearch"
-	"guoshao-fm-crawler/internal/service/internal/dao"
-	"guoshao-fm-crawler/utility"
+	"porkast-crawler/internal/model/entity"
+	"porkast-crawler/internal/service/elasticsearch"
+	"porkast-crawler/internal/service/internal/dao"
+	"porkast-crawler/utility"
 	"strconv"
 
 	"github.com/gogf/gf/v2/encoding/ghash"

@@ -6,8 +6,8 @@ package dao
 
 import (
 	"context"
-	"guoshao-fm-crawler/internal/model/entity"
-	"guoshao-fm-crawler/internal/service/internal/dao/internal"
+	"porkast-crawler/internal/model/entity"
+	"porkast-crawler/internal/service/internal/dao/internal"
 )
 
 // feedChannelUpdateRecordDao is the data access object for table feed_channel_update_record.

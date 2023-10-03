@@ -2,7 +2,7 @@ package elasticsearch
 
 import (
 	"context"
-	"guoshao-fm-crawler/internal/model/entity"
+	"porkast-crawler/internal/model/entity"
 
 	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/olivere/elastic/v7"

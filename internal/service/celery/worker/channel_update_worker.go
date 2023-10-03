@@ -1,7 +1,7 @@
 package worker
 
 import (
-	"guoshao-fm-crawler/internal/service/network"
+	"porkast-crawler/internal/service/network"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"

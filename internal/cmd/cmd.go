@@ -2,13 +2,13 @@ package cmd
 
 import (
 	"context"
-	"guoshao-fm-crawler/internal/consts"
-	"guoshao-fm-crawler/internal/service/cache"
-	"guoshao-fm-crawler/internal/service/celery"
-	"guoshao-fm-crawler/internal/service/celery/jobs"
-	"guoshao-fm-crawler/internal/service/celery/worker"
-	"guoshao-fm-crawler/internal/service/elasticsearch"
 	"os"
+	"porkast-crawler/internal/consts"
+	"porkast-crawler/internal/service/cache"
+	"porkast-crawler/internal/service/celery"
+	"porkast-crawler/internal/service/celery/jobs"
+	"porkast-crawler/internal/service/celery/worker"
+	"porkast-crawler/internal/service/elasticsearch"
 
 	"github.com/gogf/gf/v2/os/gcmd"
 	"github.com/gogf/gf/v2/os/genv"

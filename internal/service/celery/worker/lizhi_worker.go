@@ -2,9 +2,9 @@ package worker
 
 import (
 	"fmt"
-	"guoshao-fm-crawler/internal/consts"
-	"guoshao-fm-crawler/internal/service/celery/jobs"
-	"guoshao-fm-crawler/internal/service/network"
+	"porkast-crawler/internal/consts"
+	"porkast-crawler/internal/service/celery/jobs"
+	"porkast-crawler/internal/service/network"
 	"strconv"
 
 	"github.com/anaskhan96/soup"

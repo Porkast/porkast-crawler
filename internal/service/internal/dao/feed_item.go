@@ -7,8 +7,8 @@ package dao
 import (
 	"context"
 	"errors"
-	"guoshao-fm-crawler/internal/model/entity"
-	"guoshao-fm-crawler/internal/service/internal/dao/internal"
+	"porkast-crawler/internal/model/entity"
+	"porkast-crawler/internal/service/internal/dao/internal"
 
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"

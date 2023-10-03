@@ -5,7 +5,7 @@
 package dao
 
 import (
-	"guoshao-fm-crawler/internal/service/internal/dao/internal"
+	"porkast-crawler/internal/service/internal/dao/internal"
 )
 
 // userSubKeywordDao is the data access object for table user_sub_keyword.

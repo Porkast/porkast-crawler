@@ -3,8 +3,8 @@ package jobs
 import (
 	"context"
 	"fmt"
-	"guoshao-fm-crawler/internal/consts"
-	"guoshao-fm-crawler/internal/service/celery"
+	"porkast-crawler/internal/consts"
+	"porkast-crawler/internal/service/celery"
 	"time"
 
 	"github.com/gogf/gf/v2/frame/g"

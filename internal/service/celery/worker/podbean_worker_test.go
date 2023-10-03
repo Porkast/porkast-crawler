@@ -2,7 +2,7 @@ package worker
 
 import (
 	"context"
-	"guoshao-fm-crawler/internal/consts"
+	"porkast-crawler/internal/consts"
 	"testing"
 
 	"github.com/gogf/gf/v2/os/gctx"
