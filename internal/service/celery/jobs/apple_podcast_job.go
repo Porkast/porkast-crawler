@@ -22,7 +22,9 @@ func StartApplePodcastJob(ctx context.Context) {
 		time.Sleep(randomSleepTime)
 		if !isJobStarted(ctx, consts.APPLE_PODCAST_ENTRY_WORK) {
 			jobIsStarted(ctx, consts.APPLE_PODCAST_ENTRY_WORK)
-			AssignApplePodcastEntryJob(ctx)
+			for _, entryUrl := range consts.APPLE_PODCAST_ENTRY_URL_LIST {
+				AssignApplePodcastEntryJob(ctx, entryUrl)
+			}
 		}
 	})
 
@@ -31,12 +33,12 @@ func StartApplePodcastJob(ctx context.Context) {
 	}
 }
 
-func AssignApplePodcastEntryJob(ctx context.Context) {
+func AssignApplePodcastEntryJob(ctx context.Context, entryUrl string) {
 	var (
 		err error
 	)
 
-	_, err = celery.GetClient().Delay(consts.APPLE_PODCAST_ENTRY_WORK, consts.APPLE_PODCAST_CN_ENTRY_URL)
+	_, err = celery.GetClient().Delay(consts.APPLE_PODCAST_ENTRY_WORK, entryUrl)
 	if err != nil {
 		g.Log().Line().Error(ctx, fmt.Sprintf("Assign APPLE_PODCAST_ENTRY_WORK failed : %s", err))
 	}
