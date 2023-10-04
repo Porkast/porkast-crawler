@@ -1,1 +1,1 @@
-docker build -t beegedelow/guoshaofm-crawler -f ./manifest/docker/Dockerfile .
+docker build -t beegedelow/porkast-crawler -f ./manifest/docker/Dockerfile .

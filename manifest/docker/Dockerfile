@@ -7,11 +7,11 @@ FROM loads/alpine:3.8
 ENV env                     prod
 ENV WORKDIR                 /app
 ADD resource                $WORKDIR/
-ADD ./bin/linux_amd64/guoshaofm-crawler $WORKDIR/guoshaofm-crawler
-RUN chmod +x $WORKDIR/guoshaofm-crawler
+ADD ./bin/linux_amd64/porkast-crawler $WORKDIR/porkast-crawler
+RUN chmod +x $WORKDIR/porkast-crawler
 
 ###############################################################################
 #                                   START
 ###############################################################################
 WORKDIR $WORKDIR
-CMD ./guoshaofm-crawler
+CMD ./porkast-crawler
