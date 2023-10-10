@@ -147,3 +147,31 @@ func Test_setChannelLastUpdateRecord(t *testing.T) {
 		})
 	}
 }
+
+func Test_storeFeed(t *testing.T) {
+	type args struct {
+		ctx      context.Context
+		respStr  string
+		feedLink string
+		funName  string
+	}
+	tests := []struct {
+		name string
+		args args
+	}{
+		{
+			name: "store feed",
+			args: args{
+				ctx:      gctx.New(),
+				respStr:  gfile.GetContents("./testdata/apple_podcast_npe_rss.xml"),
+				feedLink: "http://www.mysteryshows.com/",
+				funName:  "Test_storeFeed",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			storeFeed(tt.args.ctx, tt.args.respStr, tt.args.feedLink, tt.args.funName)
+		})
+	}
+}

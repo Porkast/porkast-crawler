@@ -153,13 +153,18 @@ func feedItemToModel(channelId string, item gofeed.Item) (model entity.FeedItem)
 		ChannelId:   channelId,
 		Title:       item.Title,
 		Link:        item.Link,
-		PubDate:     gtime.NewFromTime(*item.PublishedParsed),
 		InputDate:   gtime.Now(),
 		Duration:    item.ITunesExt.Duration,
 		Episode:     item.ITunesExt.Episode,
 		EpisodeType: item.ITunesExt.EpisodeType,
 		Season:      item.ITunesExt.Season,
 		Description: item.Description,
+	}
+
+	if item.PublishedParsed != nil {
+		model.PubDate = gtime.NewFromTime(*item.PublishedParsed)
+	} else {
+		model.PubDate = gtime.NewFromStr(item.Published)
 	}
 
 	if item.Image != nil {
