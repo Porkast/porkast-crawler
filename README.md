@@ -14,7 +14,7 @@ Pokast Crawler is a web scraping tool designed to parse popular podcast websites
 
 ## GoFrame 
 
-This project base on GoFrame, Project Makefile Commands: 
+This project base on [GoFrame](https://github.com/gogf/gf), Project Makefile Commands: 
 - `make cli`: Install or Update to the latest GoFrame CLI tool.
 - `make dao`: Generate go files for `Entity/DAO/DO` according to the configuration file from `hack` folder.
 - `make service`: Parse `logic` folder to generate interface go files into `service` folder.
