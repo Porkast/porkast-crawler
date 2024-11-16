@@ -1,1 +1,0 @@
-docker build -t beegedelow/porkast-crawler -f ./manifest/docker/Dockerfile .
