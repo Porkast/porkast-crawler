@@ -1,3 +1,4 @@
+-- Active: 1731851622041@@127.0.0.1@5432@porkastdb@public
 CREATE TABLE feed_channel (
     id varchar(64) NOT NULL,
     title varchar(128),
@@ -17,8 +18,6 @@ CREATE TABLE feed_channel (
     PRIMARY KEY (id)
 );
 
-CREATE INDEX rfi_idx_channel_id ON rss_feed_item (channel_id);
-
 CREATE TABLE feed_item (
     id varchar(64) NOT NULL,
     channel_id varchar(64) NOT NULL,
@@ -37,7 +36,7 @@ CREATE TABLE feed_item (
     explicit varchar(64),
     season varchar(64),
     episodeType varchar(64),
-    description bytea,
+    description text,
     channel_title text,
     feed_id varchar(64) NOT NULL,
     feed_link varchar(255),
@@ -45,7 +44,12 @@ CREATE TABLE feed_item (
     PRIMARY KEY (id)
 );
 
-
 CREATE EXTENSION pgroonga;
 
-CREATE INDEX idx_rss_feed_item_full_text_search ON rss_feed_item USING pgroonga (title, description);
+CREATE INDEX rfi_idx_channel_id ON feed_item (channel_id);
+
+CREATE INDEX idx_feed_item_full_text_search ON feed_item USING pgroonga (
+    title,
+    channel_title,
+    description
+);
