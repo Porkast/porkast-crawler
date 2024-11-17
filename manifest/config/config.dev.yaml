@@ -18,10 +18,10 @@ database:
   default:
     host: "127.0.0.1"
     port: "3306"
-    user: "guoshaofm"
-    name: "guoshaofmdb"
+    user: "porkast"
+    name: "porkastdb"
     pass: "1qaz!QAZ"
-    type: "mysql"
+    type: "pgsql"
     weight: "100"
     createdAt: "true"
     updatedAt: "true"

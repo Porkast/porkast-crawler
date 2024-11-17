@@ -3,9 +3,8 @@ package worker
 import (
 	"context"
 	"fmt"
+	"porkast-crawler/internal/dao"
 	"porkast-crawler/internal/model/entity"
-	"porkast-crawler/internal/service/elasticsearch"
-	"porkast-crawler/internal/service/internal/dao"
 	"porkast-crawler/utility"
 	"strconv"
 
@@ -13,7 +12,6 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/text/gstr"
-	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/mmcdole/gofeed"
 )
 
@@ -68,35 +66,15 @@ func storeFeed(ctx context.Context, respStr, feedLink, funName string) {
 			feedItemList = append(feedItemList, feedItem)
 		}
 		err = dao.InsertOrUpdateFeedChannel(ctx, feedChannelMode)
-		if err == nil {
-			elasticsearch.Client().InsertFeedChannel(ctx, feedChannelMode)
-		}
 		for _, item := range feedItemList {
 			err = dao.InsertFeedItemIfNotExist(ctx, item)
-			if err == nil {
-				var esFeedItem entity.FeedItemESData
-				gconv.Struct(item, &esFeedItem)
-				esFeedItem.ChannelImageUrl = feedChannelMode.ImageUrl
-				esFeedItem.ChannelTitle = feedChannelMode.Title
-				esFeedItem.FeedLink = feedChannelMode.FeedLink
-				esFeedItem.Language = feedChannelMode.Language
-				elasticsearch.Client().InsertFeedItem(ctx, esFeedItem)
-				setChannelLastUpdateRecord(ctx, feedID, funName)
+			if err != nil {
+				g.Log().Line().Errorf(ctx, "Insert feed item failed with function %s : %s", funName, err)
 			}
 		}
 	}
 }
 
-func setChannelLastUpdateRecord(ctx context.Context, channelId, funName string) {
-
-	channelUpdateRecordEntity := entity.FeedChannelUpdateRecord{
-		ChannelId:  channelId,
-		FuncName:   funName,
-		UpdateTime: gtime.Now(),
-	}
-
-	dao.FeedChannelUpdateRecord.Ctx(ctx).Save(channelUpdateRecordEntity)
-}
 
 func feedChannelToModel(uid string, feed gofeed.Feed) (model entity.FeedChannel) {
 
@@ -156,7 +134,7 @@ func feedItemToModel(channelId string, item gofeed.Item) (model entity.FeedItem)
 		InputDate:   gtime.Now(),
 		Duration:    item.ITunesExt.Duration,
 		Episode:     item.ITunesExt.Episode,
-		EpisodeType: item.ITunesExt.EpisodeType,
+		Episodetype: item.ITunesExt.EpisodeType,
 		Season:      item.ITunesExt.Season,
 		Description: item.Description,
 	}

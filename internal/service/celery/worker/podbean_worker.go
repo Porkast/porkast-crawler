@@ -12,6 +12,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/text/gstr"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 func ParsePodbeanAllcategoryList(url string) {
@@ -106,7 +107,7 @@ func getPodbeanCategoryPopularShowHtml(ctx context.Context, url string) (htmlStr
 	)
 
 	respJsonStr = network.GetContent(ctx, url)
-	respJson, err = gjson.LoadJson(respJsonStr)
+	respJson, err = gjson.LoadJson(gconv.Bytes(respJsonStr))
 	if err != nil {
 		g.Log().Line().Error(ctx, fmt.Sprintf("Parse the podbead category popular response failed with url : %s\nerror:%s\n", url, err))
 	}

@@ -8,7 +8,6 @@ import (
 	"porkast-crawler/internal/service/celery"
 	"porkast-crawler/internal/service/celery/jobs"
 	"porkast-crawler/internal/service/celery/worker"
-	"porkast-crawler/internal/service/elasticsearch"
 
 	"github.com/gogf/gf/v2/os/gcmd"
 	"github.com/gogf/gf/v2/os/genv"
@@ -33,17 +32,13 @@ var (
 func initConfig() {
 	if os.Getenv("env") == "dev" {
 		genv.Set("GF_GCFG_FILE", "config.dev.yaml")
-	} else if os.Getenv("env") == "prod" {
-		genv.Set("GF_GCFG_FILE", "config.prod.yaml")
-	} else {
-		genv.Set("GF_GCFG_FILE", "config.yaml")
-	}
+	} 
 	gtime.SetTimeZone("Asia/Shanghai")
 }
 
 func initComponent(ctx context.Context) {
 	cache.InitCache(ctx)
-	elasticsearch.InitES(ctx)
+	// elasticsearch.InitES(ctx)
 }
 
 func initCelery(ctx context.Context) {
@@ -51,12 +46,12 @@ func initCelery(ctx context.Context) {
 	RegisterCeleryWorker()
 	celery.GetClient().StartWorker()
 	jobs.StartFeedUpdatJobs(ctx)
-	jobs.StartXiMaLaYaJobs(ctx)
-	jobs.StartLizhiJob(ctx)
-	jobs.StartFirstoryJob(ctx)
-	jobs.StartSpreakerJob(ctx)
-	jobs.StartPodbeanJob(ctx)
 	jobs.StartApplePodcastJob(ctx)
+	// jobs.StartXiMaLaYaJobs(ctx)
+	// jobs.StartLizhiJob(ctx)
+	// jobs.StartFirstoryJob(ctx)
+	// jobs.StartSpreakerJob(ctx)
+	// jobs.StartPodbeanJob(ctx)
 }
 
 func RegisterCeleryWorker() {

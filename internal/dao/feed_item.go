@@ -7,17 +7,20 @@ package dao
 import (
 	"context"
 	"errors"
+	"porkast-crawler/internal/dao/internal"
 	"porkast-crawler/internal/model/entity"
-	"porkast-crawler/internal/service/internal/dao/internal"
 
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
+// internalFeedItemDao is internal type for wrapping internal DAO implements.
+type internalFeedItemDao = *internal.FeedItemDao
+
 // feedItemDao is the data access object for table feed_item.
 // You can define custom methods on it to extend its functionality as you wish.
 type feedItemDao struct {
-	*internal.FeedItemDao
+	internalFeedItemDao
 }
 
 var (

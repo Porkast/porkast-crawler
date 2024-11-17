@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 	"porkast-crawler/internal/consts"
+	"porkast-crawler/internal/dao"
 	"porkast-crawler/internal/model/entity"
 	"porkast-crawler/internal/service/celery"
-	"porkast-crawler/internal/service/internal/dao"
 	"time"
 
 	"github.com/gogf/gf/v2/frame/g"

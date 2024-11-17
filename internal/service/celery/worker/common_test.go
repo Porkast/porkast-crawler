@@ -122,32 +122,6 @@ func Test_feedItemToModel(t *testing.T) {
 	}
 }
 
-func Test_setChannelLastUpdateRecord(t *testing.T) {
-	type args struct {
-		ctx       context.Context
-		channelId string
-		funName   string
-	}
-	tests := []struct {
-		name string
-		args args
-	}{
-		{
-			name: "set channel last update time",
-			args: args{
-				ctx:       gctx.New(),
-				channelId: "10snekvib3e4i",
-				funName:   "Test_setChannelLastUpdateRecord",
-			},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			setChannelLastUpdateRecord(tt.args.ctx, tt.args.channelId, tt.args.funName)
-		})
-	}
-}
-
 func Test_storeFeed(t *testing.T) {
 	type args struct {
 		ctx      context.Context

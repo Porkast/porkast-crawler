@@ -3,12 +3,6 @@ package elasticsearch
 import (
 	"context"
 	"porkast-crawler/internal/model/entity"
-
-	"github.com/anaskhan96/soup"
-	"github.com/gogf/gf/v2/encoding/gjson"
-	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/util/gconv"
-	"github.com/olivere/elastic/v7"
 )
 
 const feedItemMapping = `
@@ -99,37 +93,37 @@ func (c *GSElastic) CreateFeedItemIndexIfNotExit(ctx context.Context) {
 }
 
 func (c *GSElastic) InsertFeedItemList(ctx context.Context, feedChannel entity.FeedChannel, feedItemList []entity.FeedItem) {
-	if len(feedItemList) == 0 {
-		return
-	}
-	bulkRequest := c.Client.Bulk()
-	for _, feedItem := range feedItemList {
-		esFeedItem := entity.FeedItemESData{}
-		gconv.Struct(feedItem, &esFeedItem)
-		esFeedItem.ChannelImageUrl = feedChannel.ImageUrl
-		esFeedItem.ChannelTitle = feedChannel.Title
-		esFeedItem.FeedLink = feedChannel.FeedLink
-		indexReq := elastic.NewBulkIndexRequest().Index("feed_item").Id(feedItem.Id).Doc(esFeedItem)
-		bulkRequest.Add(indexReq)
-	}
-	resp, err := bulkRequest.Do(ctx)
-	if err != nil || resp.Errors {
-		respStr := gjson.New(resp)
-		g.Log().Line().Errorf(ctx, "bulk index request failed\nError message : %s \nResponse : %s", err, respStr.MustToIniString())
-	}
+	// if len(feedItemList) == 0 {
+	// 	return
+	// }
+	// bulkRequest := c.Client.Bulk()
+	// for _, feedItem := range feedItemList {
+	// 	esFeedItem := entity.FeedItemESData{}
+	// 	gconv.Struct(feedItem, &esFeedItem)
+	// 	esFeedItem.ChannelImageUrl = feedChannel.ImageUrl
+	// 	esFeedItem.ChannelTitle = feedChannel.Title
+	// 	esFeedItem.FeedLink = feedChannel.FeedLink
+	// 	indexReq := elastic.NewBulkIndexRequest().Index("feed_item").Id(feedItem.Id).Doc(esFeedItem)
+	// 	bulkRequest.Add(indexReq)
+	// }
+	// resp, err := bulkRequest.Do(ctx)
+	// if err != nil || resp.Errors {
+	// 	respStr := gjson.New(resp)
+	// 	g.Log().Line().Errorf(ctx, "bulk index request failed\nError message : %s \nResponse : %s", err, respStr.MustToIniString())
+	// }
 }
 
-func (c *GSElastic) InsertFeedItem(ctx context.Context, feedItem entity.FeedItemESData) (err error) {
-	g.Log().Line().Debugf(ctx, "Insert feed item %s to elasticsearch", feedItem.Title)
-	esFeedItem := entity.FeedItemESData{}
-	gconv.Struct(feedItem, &esFeedItem)
-	rootDocs := soup.HTMLParse(feedItem.Description)
-	esFeedItem.Description = rootDocs.FullText()
-	_, err = elastic.NewIndexService(c.Client).Index("feed_item").Id(feedItem.Id).BodyJson(esFeedItem).Do(ctx)
-	if err != nil {
-		g.Log().Line().Errorf(ctx, "Insert feed item %s to elasticsearch failed %s", feedItem.Title, err)
-		return
-	}
+// func (c *GSElastic) InsertFeedItem(ctx context.Context, feedItem entity.FeedItemESData) (err error) {
+// 	g.Log().Line().Debugf(ctx, "Insert feed item %s to elasticsearch", feedItem.Title)
+// 	esFeedItem := entity.FeedItemESData{}
+// 	gconv.Struct(feedItem, &esFeedItem)
+// 	rootDocs := soup.HTMLParse(feedItem.Description)
+// 	esFeedItem.Description = rootDocs.FullText()
+// 	_, err = elastic.NewIndexService(c.Client).Index("feed_item").Id(feedItem.Id).BodyJson(esFeedItem).Do(ctx)
+// 	if err != nil {
+// 		g.Log().Line().Errorf(ctx, "Insert feed item %s to elasticsearch failed %s", feedItem.Title, err)
+// 		return
+// 	}
 
-	return
-}
+// 	return
+// }

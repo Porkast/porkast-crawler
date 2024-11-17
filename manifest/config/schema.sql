@@ -1,41 +1,51 @@
-create table
-    if not exists rss_feed_channel (
-        id varchar(64) not null primary key,
-        title varchar(128) null,
-        channel_desc mediumtext null,
-        image_url varchar(128) null,
-        link varchar(128) null,
-        rss_link varchar(128) null,
-        copyright varchar(128) null,
-        language varchar(128) null,
-        author varchar(128) null,
-        owner_name varchar(128) null,
-        owner_email varchar(128) null,
-        feed_type varchar(128) null,
-        categories varchar(128) null,
-    );
+CREATE TABLE feed_channel (
+    id varchar(64) NOT NULL,
+    title varchar(128),
+    channel_desc text,
+    image_url varchar(128),
+    link varchar(128),
+    feed_link varchar(128),
+    copyright varchar(128),
+    language varchar(128),
+    author varchar(128),
+    owner_name varchar(128),
+    owner_email varchar(128),
+    feed_type varchar(128),
+    categories varchar(128),
+    source varchar(64),
+    feed_id varchar(64),
+    PRIMARY KEY (id)
+);
 
--- MySQL fulltext search table
+CREATE INDEX rfi_idx_channel_id ON rss_feed_item (channel_id);
 
-create table
-    if not exists rss_feed_item (
-        id varchar(64) not null primary key,
-        channel_id varchar(64) not null,
-        title varchar (256) null,
-        link varchar(128) null,
-        pub_date date null,
-        author varchar(128) null,
-        input_date datetime null,
-        image_url varchar(256) null,
-        enclosure_url varchar(256) null,
-        enclosure_type varchar(256) null,
-        enclosure_length varchar(256) null,
-        duration varchar(256) null,
-        episode varchar(64) null,
-        explicit varchar(64) null,
-        season varchar(64) null,
-        episodeType varchar(64) null,
-        description mediumtext null,
-    );
+CREATE TABLE feed_item (
+    id varchar(64) NOT NULL,
+    channel_id varchar(64) NOT NULL,
+    guid varchar(256),
+    title text,
+    link text,
+    pub_date date,
+    author varchar(128),
+    input_date timestamp,
+    image_url varchar(256),
+    enclosure_url text,
+    enclosure_type varchar(256),
+    enclosure_length varchar(256),
+    duration varchar(256),
+    episode varchar(64),
+    explicit varchar(64),
+    season varchar(64),
+    episodeType varchar(64),
+    description bytea,
+    channel_title text,
+    feed_id varchar(64) NOT NULL,
+    feed_link varchar(255),
+    source varchar(255),
+    PRIMARY KEY (id)
+);
 
-create index rfi_idx_channel_id on rss_feed_item (channel_id);
+
+CREATE EXTENSION pgroonga;
+
+CREATE INDEX idx_rss_feed_item_full_text_search ON rss_feed_item USING pgroonga (title, description);

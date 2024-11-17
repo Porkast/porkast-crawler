@@ -3,7 +3,7 @@
 gfcli:
   gen:
     dao:
-      - link: "mysql:guoshaofm:qazxsw@tcp(127.0.0.1:3306)/guoshaofmdb?loc=Local&parseTime=true"
+      - link: "pgsql:porkast:1qaz!QAZ@tcp(127.0.0.1:5432)/porkastdb"
   build:
     name: "porkast-crawler"
     arch: "amd64"

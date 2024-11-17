@@ -12,6 +12,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/text/gstr"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 func ParseSpreakerAllCategoryList() {
@@ -125,7 +126,7 @@ func getSpreakerCategoryNextUrl(respStr string) (nextUrl string) {
 		respJson *gjson.Json
 		rootDocs soup.Root
 	)
-	respJson, err = gjson.LoadJson(respStr)
+	respJson, err = gjson.LoadJson(gconv.Bytes(respStr))
 	if err == nil {
 		nextUrl = respJson.GetJson("response.next_url").Var().String()
 	} else {
@@ -147,7 +148,7 @@ func getSpreakerShowLinks(respStr string) (linkList []string) {
 		rootDocs soup.Root
 	)
 
-	respJson, err = gjson.LoadJson(respStr)
+	respJson, err = gjson.LoadJson(gconv.Bytes(respStr))
 	if err == nil {
 		itemList := respJson.GetJsons("response.items")
 		for _, item := range itemList {
