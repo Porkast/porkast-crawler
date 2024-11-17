@@ -8,11 +8,12 @@ import (
 	"time"
 
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gcron"
 )
 
 func StartApplePodcastJob(ctx context.Context) {
 
-	// _, err := gcron.Add(ctx, consts.PODCAST_WEB_CRAWLER_CRON_PATTERN, func(ctx context.Context) {
+	_, err := gcron.Add(ctx, consts.PODCAST_WEB_CRAWLER_CRON_PATTERN, func(ctx context.Context) {
 		var (
 			randomSleepTime time.Duration
 		)
@@ -25,11 +26,11 @@ func StartApplePodcastJob(ctx context.Context) {
 				AssignApplePodcastEntryJob(ctx, entryUrl)
 			}
 		}
-	// })
+	})
 
-	// if err != nil {
-	// 	g.Log().Line().Error(ctx, "Add apple podcast entry jobs cron job failed : ", err)
-	// }
+	if err != nil {
+		g.Log().Line().Error(ctx, "Add apple podcast entry jobs cron job failed : ", err)
+	}
 }
 
 func AssignApplePodcastEntryJob(ctx context.Context, entryUrl string) {
